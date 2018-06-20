@@ -13,12 +13,12 @@ if ($mysqli->connect_error) {
 }
 
 if ($stmt = $mysqli->prepare("
-SELECT username, COALESCE(SUM(correctnumber/question_count), 0) * 1000
+SELECT username, COALESCE(SUM(correctnumber/question_count), 0) * 1000 AS corrects
 FROM users
   LEFT JOIN answers ON users.userid=answers.userid
 LEFT JOIN quizzes ON answers.quizid=quizzes.quizid
 LEFT JOIN (SELECT quizid, COUNT(questionid) AS question_count FROM questions AS T1 GROUP BY quizid) as T1 ON T1.quizid=quizzes.quizid
-GROUP BY users.userid ORDER BY correctnumber DESC, username ASC LIMIT 10")) {
+GROUP BY users.userid ORDER BY corrects DESC, username ASC LIMIT 10")) {
     $result = $stmt->execute();
     $stmt->store_result();
     $stmt->bind_result($username, $points);

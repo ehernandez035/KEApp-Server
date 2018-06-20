@@ -28,7 +28,7 @@ SELECT pos FROM users LEFT JOIN (
 SELECT (@pos:=@pos+1) pos, userid FROM (
   SELECT
     users.userid,
-    COALESCE(SUM(correctnumber / question_count), 0) * 1000
+    COALESCE(SUM(correctnumber / question_count), 0) * 1000 AS corrects
   FROM users
     LEFT JOIN answers ON users.userid = answers.userid
     LEFT JOIN quizzes ON answers.quizid = quizzes.quizid
@@ -38,7 +38,7 @@ SELECT (@pos:=@pos+1) pos, userid FROM (
                FROM questions AS T1
                GROUP BY quizid) AS T1 ON T1.quizid = quizzes.quizid
   GROUP BY users.userid
-  ORDER BY SUM(correctnumber / question_count) DESC, username ASC
+  ORDER BY corrects DESC, username ASC
 ) AS T2) AS T3 ON users.userid=T3.userid
 WHERE users.userid=?")) {
     $stmt->bind_param("i", $uid);
