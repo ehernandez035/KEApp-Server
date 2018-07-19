@@ -1,0 +1,6 @@
+[id^='quizrow-']{
+    cursor: pointer;
+}
+[id^='quizrow-']:hover{
+    background-color: lightgray;
+}
