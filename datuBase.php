@@ -5,33 +5,38 @@ if ($mysqli->connect_error) {
     echo 2;
     die();
 }
-function getQuizzes(){
+function getQuizzes()
+{
     global $mysqli;
-    if ($stmt = $mysqli->prepare("SELECT * FROM quizzes")) {
+    if ($stmt = $mysqli->prepare("SELECT quizid, description, description_esp FROM quizzes")) {
 
-        if($stmt->execute()){
+        if ($stmt->execute()) {
             $stmt->bind_result($id, $description, $description_es);
-            $quizzes=array();
-            while($stmt->fetch()){
-                $quizzes[]=array("id"=>$id, "description"=>$description, "description_es"=>$description_es);
+            $stmt->store_result();
+            $quizzes = array();
+            while ($stmt->fetch()) {
+                $quizzes[] = array("id" => $id, "description" => $description, "description_es" => $description_es);
             }
             return $quizzes;
         }
-    }return null;
+    }
+    return null;
 }
 
-function getQuestions($qid){
+function getQuestions($qid)
+{
     global $mysqli;
-    if ($stmt = $mysqli->prepare("SELECT * FROM questions WHERE quizid=?")) {
+    if ($stmt = $mysqli->prepare("SELECT questionid, correct_answer, correct_answer_esp, false_answer1, false_answer1_esp, false_answer2, false_answer2_esp, false_answer3, false_answer3_esp, question, question_esp FROM questions WHERE quizid=?")) {
         $stmt->bind_param("i", $qid);
-        if($stmt->execute()){
+        if ($stmt->execute()) {
             $stmt->store_result();
-            $stmt->bind_result($quizid, $questionid, $correct_ans, $correct_ans_esp, $false1, $false1_esp, $false2, $false2_esp, $false3, $false3_esp, $question, $question_esp);
-            $questions=array();
-            while($stmt->fetch()){
-                $questions[]=array("questionid"=>$questionid, "correct_ans"=>$correct_ans, "correct_ans_esp"=>$correct_ans_esp, "false1"=> $false1, "false1_esp"=>$false1_esp, "false2"=> $false2, "false2_esp"=>$false2_esp, "false3"=> $false3, "false3_esp"=>$false3_esp, "question"=>$question, "question_esp"=>$question_esp);
+            $stmt->bind_result($questionid, $correct_ans, $correct_ans_esp, $false1, $false1_esp, $false2, $false2_esp, $false3, $false3_esp, $question, $question_esp);
+            $questions = array();
+            while ($stmt->fetch()) {
+                $questions[] = array("questionid" => $questionid, "correct_ans" => $correct_ans, "correct_ans_esp" => $correct_ans_esp, "false1" => $false1, "false1_esp" => $false1_esp, "false2" => $false2, "false2_esp" => $false2_esp, "false3" => $false3, "false3_esp" => $false3_esp, "question" => $question, "question_esp" => $question_esp);
             }
             return $questions;
         }
-    }return null;
+    }
+    return null;
 }
