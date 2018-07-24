@@ -1,8 +1,15 @@
 <?php
+
 require_once "../config.php";
 require_once "checkOnline.php";
 require_once "../datuBase.php";
 checkOnline();
+
+
+
+
+
+
 
 
 $questionid = $_GET["questionid"];
