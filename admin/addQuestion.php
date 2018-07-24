@@ -5,16 +5,9 @@ require_once "checkOnline.php";
 require_once "../datuBase.php";
 checkOnline();
 
-
-
-
-
-
-
-
-$questionid = $_GET["questionid"];
-if ($stmt = $mysqli->prepare("DELETE FROM questions WHERE questionid=?")) {
-    $stmt->bind_param("i", $questionid);
+$quid = $_GET["quizid"];
+if ($stmt = $mysqli->prepare("INSERT INTO questions(quizid) VALUES(?)")) {
+    $stmt->bind_param("i", $quid);
     if ($stmt->execute()) {
         die(0);
     }
