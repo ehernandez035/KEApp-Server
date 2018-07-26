@@ -40,3 +40,20 @@ function getQuestions($qid)
     }
     return null;
 }
+
+function getUsers(){
+    global $mysqli;
+    if ($stmt = $mysqli->prepare("SELECT userid, username, email FROM users")) {
+
+        if ($stmt->execute()) {
+            $stmt->bind_result($userid, $username, $email);
+            $stmt->store_result();
+            $users = array();
+            while ($stmt->fetch()) {
+                $users[] = array("userid" =>$userid, "username" => $username, "email" => $email);
+            }
+            return $users;
+        }
+    }
+    return null;
+}
