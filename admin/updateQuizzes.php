@@ -10,7 +10,7 @@ if ($mysqli->connect_error) {
     die();
 }
 
-$quid = $_POST["quid"];
+$quid = $_POST["quizid"];
 $deskribapena = $_POST["deskribapena"];
 $descripcion = $_POST["descripcion"];
 

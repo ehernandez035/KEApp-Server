@@ -9,7 +9,8 @@ $quid = $_GET["quizid"];
 if ($stmt = $mysqli->prepare("INSERT INTO questions(quizid) VALUES(?)")) {
     $stmt->bind_param("i", $quid);
     if ($stmt->execute()) {
-        die(0);
+        echo($stmt->insert_id);
+        die();
     }
-    die(-1);
 }
+http_response_code(500);

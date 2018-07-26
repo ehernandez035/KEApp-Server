@@ -11,5 +11,5 @@ if ($stmt = $mysqli->prepare("DELETE FROM questions WHERE questionid=?")) {
     if ($stmt->execute()) {
         die(0);
     }
-    die(-1);
 }
+http_response_code(500);
