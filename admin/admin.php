@@ -42,6 +42,11 @@ $quizzes = getQuizzes();
         } ?>
     </table>
 </div>
+<div class="container">
+    <div class="text-center mt-3">
+        <a type="button" href="addQuiz.php" class='btn btn-primary'>Galdetegi berria gehitu</a>
+    </div>
+</div>
 <footer class="page-footer font-small bg-primary text-light fixed-bottom">
 
     <!-- Copyright -->
