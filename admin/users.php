@@ -14,6 +14,7 @@ $users = getUsers();
 
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body style="margin-bottom: 100px">
 <div class="container mt-3">
@@ -24,6 +25,7 @@ $users = getUsers();
             <th>Erabiltzailea</th>
             <th>Email helbidea</th>
             <th></th>
+            <th></th>
         </tr>
         <?php
         foreach ($users as $user) {
@@ -32,6 +34,11 @@ $users = getUsers();
             echo "<td>$user[email]</td>";
             echo "<td><button class='btn btn-danger' type='button' data-target='#deleteUserModal' data-toggle='modal'
                                             data-userid='$user[userid]'>Ezabatu</button></td>";
+            echo "<td><button class='btn btn-primary' type='button' data-email='$user[email]' data-target='#messageModal' data-toggle='modal'>
+<i class='material-icons'>
+mail
+</i>
+</button></td> ";
             echo "</tr>";
 
 
@@ -70,6 +77,33 @@ $users = getUsers();
     </div>
 </div>
 
+<!-- Message modal -->
+<div class="modal fade" tabindex="-1" id="messageModal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Mezua bidali</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="sendMessage.php" id="messageForm">
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Mezua:</label>
+                        <textarea class="form-control" id="message-text" name="message"></textarea>
+                        <input name="email" type="hidden" id="emailInput">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="sendButtonConfirm" class="btn btn-primary">Bidali</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Itxi</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script language="JavaScript" src="js/jquery-3.3.1.min.js"></script>
 <script language="JavaScript" src="js/bootstrap.js"></script>
@@ -81,8 +115,21 @@ $users = getUsers();
         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this);
-        modal.find('#delete-user-confirm').attr('href', "deleteUser.php?userid="+userid);
-    })
+        modal.find('#delete-user-confirm').attr('href', "deleteUser.php?userid=" + userid);
+    });
+
+    $('#messageModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var email = button.data('email');
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this);
+        modal.find('#emailInput').val(email);
+        modal.find('#sendButtonConfirm').click(function () {
+            modal.find('#messageForm').submit();
+        })
+    });
+
 </script>
 </body>
 </html>
