@@ -30,11 +30,11 @@ $quizzes = getQuizzes();
     <h1>KEApp kudeaketa</h1>
 
     <div class="text-center">
-        <a type="button" class='btn btn-primary' href="admin.php">Galdetegiak</a>
+        <a class='btn btn-primary' href="admin.php">Galdetegiak</a>
     </div>
 
     <div class="text-center mt-3">
-        <a type="button" class='btn btn-primary' href="users.php">Erabiltzaileak</a>
+        <a class='btn btn-primary' href="users.php">Erabiltzaileak</a>
     </div>
 </div>
 <footer class="page-footer font-small bg-primary text-light fixed-bottom">
