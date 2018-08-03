@@ -13,9 +13,18 @@ $quizzes = getQuizzes();
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="css/bootstrap.css">
+
+    <link rel="shortcut icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="main.css">
 </head>
 <body style="margin-bottom: 100px">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="menu.php">KEApp</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+
 <div class="container mt-3">
 
     <h1>KEApp kudeaketa</h1>

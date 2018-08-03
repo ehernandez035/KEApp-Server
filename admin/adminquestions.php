@@ -14,10 +14,24 @@ $questions = getQuestions($quizid);
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <link rel="shortcut icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="main.css">
+
 </head>
 <body style="margin-bottom: 100px">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="menu.php">KEApp</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="admin.php">Galdetegiak</a>
+        </div>
+    </div>
+</nav>
 <main>
 
     <div class="container mt-3" id="cardContainer">
@@ -59,6 +73,23 @@ $questions = getQuestions($quizid);
                 <div class="card-body">
                     <div class="container">
                         <form id="galderaForm-<?php echo $question['questionid'] ?>">
+                            <input type="hidden" name="questionid" value="<?php echo $question['questionid'] ?>">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" name="img"
+                                                   onchange="onFileSelected(event,<?php echo $question['questionid']; ?>)"
+                                                   id="file-<?php echo $question['questionid']; ?>">
+                                            <label class="custom-file-label"
+                                                   for="file-<?php echo $question['questionid']; ?>">Argazkia
+                                                aukeratu</label>
+                                        </div>
+                                        <img id="image-upload-<?php echo $question['questionid']; ?>"
+                                             style="max-width: 100%; display: block; margin: auto">
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
 
                                 <div class="col-6">
@@ -134,6 +165,7 @@ $questions = getQuestions($quizid);
                                     </button>
 
                                 </div>
+
                             </div>
                         </form>
                     </div>
@@ -170,7 +202,29 @@ $questions = getQuestions($quizid);
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Galdera gorde da</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Aldaketak gorde dira.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Itxi</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
+
 
 <footer class="page-footer font-small bg-primary text-light fixed-bottom">
 
@@ -184,6 +238,7 @@ $questions = getQuestions($quizid);
 
 <script language="JavaScript" src="js/jquery-3.3.1.min.js"></script>
 <script language="JavaScript" src="js/bootstrap.js"></script>
+<script src="http://malsup.github.com/jquery.form.js"></script>
 
 <script language="JavaScript">
     $('#deleteQuestionModal').on('show.bs.modal', function (event) {
@@ -214,11 +269,26 @@ $questions = getQuestions($quizid);
     function createQuestion(questionid) {
         console.log(questionid);
         var questionContent = `
-<div class="card mt-3" id="questionid">
+<div class="card mt-3" id="card-${questionid}">
     <div class="card-header">Galdera ${questionid}</div>
     <div class="card-body">
         <div class="container">
             <form id="galderaForm-${questionid}">
+            <input type="hidden" name="questionid" value="${questionid}">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" name="img"
+                                       id="file-${questionid}" onchange="onFileSelected(event,${questionid})">
+                                <label class="custom-file-label"
+                                       for="file-${questionid}">Argazkia
+                                    aukeratu</label>
+                            </div>
+                            <img id="image-upload-${questionid}" style="max-width: 100%; display: block; margin: auto">
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
 
                     <div class="col-6">
@@ -283,7 +353,7 @@ $questions = getQuestions($quizid);
                         </div>
                         <button type="button" class='btn btn-danger' data-toggle="modal"
                                 data-target="#deleteQuestionModal"
-                                data-questionid="${questionid} ?>">Ezabatu
+                                data-questionid="${questionid}">Ezabatu
                         </button>
                     </div>
                 </div>
@@ -292,6 +362,7 @@ $questions = getQuestions($quizid);
     </div>
 </div>`;
         $("#cardContainer").append(questionContent);
+        buttonClick($("#save-"+questionid));
 
     }
 
@@ -337,49 +408,41 @@ $questions = getQuestions($quizid);
     });
 
     $('input[id^="save-"]').each(function (index, saveButton) {
+        buttonClick(saveButton);
+    });
+
+    function buttonClick(saveButton) {
         let buttonId = $(saveButton).attr("id");
         let questionid = buttonId.substring(5, buttonId.length);
-        $(saveButton).on('click', function () {
-            let enuntziatua = $('#enuntziatua-' + questionid).val();
-            let enuntziatuaEs = $('#enuntziatuaEs-' + questionid).val();
-            let erantzunZuzena = $('#erantzunZuzena-' + questionid).val();
-            let erantzunZuzenaEs = $('#erantzunZuzenaEs-' + questionid).val();
-            let erantzunOkerra1 = $('#erantzunOkerra1-' + questionid).val();
-            let erantzunOkerra1Es = $('#erantzunOkerra1Es-' + questionid).val();
-            let erantzunOkerra2 = $('#erantzunOkerra2-' + questionid).val();
-            let erantzunOkerra2Es = $('#erantzunOkerra2Es-' + questionid).val();
-            let erantzunOkerra3 = $('#erantzunOkerra3-' + questionid).val();
-            let erantzunOkerra3Es = $('#erantzunOkerra3Es-' + questionid).val();
 
-            $.ajax({
-                url: "updateQuestions.php",
-                type: "post",
-                data: {
-                    questionid: questionid,
-                    correct_ans: erantzunZuzena,
-                    correct_ans_esp: erantzunZuzenaEs,
-                    false1: erantzunOkerra1,
-                    false1_esp: erantzunOkerra1Es,
-                    false2: erantzunOkerra2,
-                    false2_esp: erantzunOkerra2Es,
-                    false3: erantzunOkerra3,
-                    false3_esp: erantzunOkerra3Es,
-                    question: enuntziatua,
-                    question_esp: enuntziatuaEs
-                },
+        $(saveButton).on('click', function () {
+            console.log("clicked");
+            $("#galderaForm-" + questionid).ajaxSubmit({
+                url: 'updateQuestions.php',
+                type: 'post',
                 success: function (response) {
-                    let btn = $(saveButton);
-                    btn.val("Gordeta").removeClass('btn-primary').addClass('btn-success');
-                    setTimeout(function () {
-                        btn.val("Gorde!").removeClass('btn-success').addClass('btn-primary');
-                    }, 2000);
-                },
-                error: function (xhr) {
-                    alert("Errore bat gertatu da.");
+                    $('#successModal').modal('show');
                 }
             });
+
         });
-    });
+    }
+
+
+    function onFileSelected(event, questionid) {
+        var selectedFile = event.target.files[0];
+        var reader = new FileReader();
+
+        var imgtag = document.getElementById("image-upload-" + questionid);
+        imgtag.title = selectedFile.name;
+
+        reader.onload = function (event) {
+            imgtag.src = event.target.result;
+        };
+
+        reader.readAsDataURL(selectedFile);
+    }
+
 
 </script>
 

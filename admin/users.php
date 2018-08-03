@@ -14,9 +14,21 @@ $users = getUsers();
 
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="main.css">
+    <link rel="shortcut icon" type="image/png" href="favicon.png">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body style="margin-bottom: 100px">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="menu.php">KEApp</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="users.php">Erabiltzaileak</a>
+        </div>
+    </div>
+</nav>
 <div class="container mt-3">
 
     <h1>KEApp kudeaketa</h1>
@@ -103,7 +115,6 @@ mail
         </div>
     </div>
 </div>
-
 
 <script language="JavaScript" src="js/jquery-3.3.1.min.js"></script>
 <script language="JavaScript" src="js/bootstrap.js"></script>
