@@ -26,7 +26,7 @@ function getQuizzes()
 function getQuestions($qid)
 {
     global $mysqli;
-    if ($stmt = $mysqli->prepare("SELECT questionid, correct_answer, correct_answer_esp, false_answer1, false_answer1_esp, false_answer2, false_answer2_esp, false_answer3, false_answer3_esp, question, question_esp FROM questions WHERE quizid=?")) {
+    if ($stmt = $mysqli->prepare("SELECT questionid, correct_answer, correct_answer_esp, false_answer1, false_answer1_esp, false_answer2, false_answer2_esp, false_answer3, false_answer3_esp, question, question_esp FROM questions WHERE quizid=? ORDER BY position ASC")) {
         $stmt->bind_param("i", $qid);
         if ($stmt->execute()) {
             $stmt->store_result();

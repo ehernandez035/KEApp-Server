@@ -35,7 +35,7 @@ $questions = getQuestions($quizid);
 </nav>
 <main>
 
-    <div class="container mt-3" id="cardContainer">
+    <div class="container mt-3">
         <h1>KEApp kudeaketa</h1>
         <div class="card mt-3">
             <div class="card-header">
@@ -65,131 +65,141 @@ $questions = getQuestions($quizid);
             </div>
         </div>
 
-        <?php
-        foreach ($questions as $question) {
+        <div id="cardContainer">
+            <?php
+            foreach ($questions as $question) {
 
-            ?>
-            <div class="card mt-3" id="card-<?php echo $question['questionid'] ?>">
-                <div class="card-header d-flex align-items-center justify-content-between">
-                    Galdera <?php echo $question['questionid'] ?>
-                    <button class="btn btn-primary" id="minimize-<?php echo $question['questionid'] ?>">
-                        <i class="material-icons" id="zoomIcon-<?php echo $question['questionid'] ?>">
-                            remove
-                        </i>
-                    </button>
-                </div>
-                <div class="card-body" id="galderaBody-<?php echo $question['questionid'] ?>">
-                    <div class="container">
-                        <form id="galderaForm-<?php echo $question['questionid'] ?>">
-                            <input type="hidden" name="questionid" value="<?php echo $question['questionid'] ?>">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="img"
-                                                   onchange="onFileSelected(event,<?php echo $question['questionid']; ?>)"
-                                                   id="file-<?php echo $question['questionid']; ?>">
-                                            <label class="custom-file-label"
-                                                   for="file-<?php echo $question['questionid']; ?>">Argazkia
-                                                aukeratu</label>
+                ?>
+                <div class="card mt-3" id="card-<?php echo $question['questionid'] ?>">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        Galdera <?php echo $question['questionid'] ?>
+                        <div>
+                            <button class='btn btn-secondary btn-sm' id='up-<?php echo $question['questionid'] ?>'>
+                                <i class='material-icons'>arrow_upward</i>
+                            </button>
+                            <button class='btn btn-secondary btn-sm' id='down-<?php echo $question['questionid'] ?>'>
+                                <i class='material-icons'>arrow_downward</i>
+                            </button>
+                            <button class="btn btn-primary btn-sm" id="minimize-<?php echo $question['questionid'] ?>">
+                                <i class="material-icons" id="zoomIcon-<?php echo $question['questionid'] ?>">
+                                    remove
+                                </i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body" id="galderaBody-<?php echo $question['questionid'] ?>">
+                        <div class="container">
+                            <form id="galderaForm-<?php echo $question['questionid'] ?>">
+                                <input type="hidden" name="questionid" value="<?php echo $question['questionid'] ?>">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" name="img"
+                                                       onchange="onFileSelected(event,<?php echo $question['questionid']; ?>)"
+                                                       id="file-<?php echo $question['questionid']; ?>">
+                                                <label class="custom-file-label"
+                                                       for="file-<?php echo $question['questionid']; ?>">Argazkia
+                                                    aukeratu</label>
+                                            </div>
+                                            <img id="image-upload-<?php echo $question['questionid']; ?>"
+                                                 style="max-width: 100%; display: block; margin: auto">
                                         </div>
-                                        <img id="image-upload-<?php echo $question['questionid']; ?>"
-                                             style="max-width: 100%; display: block; margin: auto">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
+                                <div class="row">
 
-                                <div class="col-12 col-lg-6">
-                                    <b>Euskera</b>
-                                    <div class="form-group">
-                                        <label for="enuntziatua">Enuntziatua</label>
-                                        <input name="enuntziatua" class="form-control"
-                                               id="enuntziatua-<?php echo $question['questionid']; ?>"
-                                               value='<?php echo $question['question'] ?>'>
+                                    <div class="col-12 col-lg-6">
+                                        <b>Euskera</b>
+                                        <div class="form-group">
+                                            <label for="enuntziatua">Enuntziatua</label>
+                                            <input name="enuntziatua" class="form-control"
+                                                   id="enuntziatua-<?php echo $question['questionid']; ?>"
+                                                   value='<?php echo $question['question'] ?>'>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="erantzunZuzena">Erantzun zuzena</label>
+                                            <input name="erantzunZuzena" class="form-control"
+                                                   id="erantzunZuzena-<?php echo $question['questionid']; ?>"
+                                                   value='<?php echo $question['correct_ans'] ?>'>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="erantzunOkerra1">Erantzun okerra</label>
+                                            <input name="erantzunOkerra1" class="form-control"
+                                                   id="erantzunOkerra1-<?php echo $question['questionid']; ?>"
+                                                   value='<?php echo $question['false1'] ?>'>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="erantzunOkerra2">Erantzun okerra</label>
+                                            <input name="erantzunOkerra2" class="form-control"
+                                                   id="erantzunOkerra2-<?php echo $question['questionid']; ?>"
+                                                   value='<?php echo $question['false2'] ?>'>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="erantzunOkerra3">Erantzun okerra</label>
+                                            <input name="erantzunOkerra3" class="form-control"
+                                                   id="erantzunOkerra3-<?php echo $question['questionid']; ?>"
+                                                   value='<?php echo $question['false3'] ?>'>
+                                        </div>
+
                                     </div>
-                                    <div class="form-group">
-                                        <label for="erantzunZuzena">Erantzun zuzena</label>
-                                        <input name="erantzunZuzena" class="form-control"
-                                               id="erantzunZuzena-<?php echo $question['questionid']; ?>"
-                                               value='<?php echo $question['correct_ans'] ?>'>
+                                    <div class="col-12 col-lg-6">
+                                        <b>Gaztelera</b>
+                                        <div class="form-group">
+                                            <label for="enuntziatuaEs">Enunciado</label>
+                                            <input name="enuntziatuaEs" class="form-control"
+                                                   id="enuntziatuaEs-<?php echo $question['questionid']; ?>"
+                                                   value='<?php echo $question['question_esp'] ?>'>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="erantzunZuzenaEs">Respuesta correcta</label>
+                                            <input name="erantzunZuzenaEs" class="form-control"
+                                                   id="erantzunZuzenaEs-<?php echo $question['questionid']; ?>"
+                                                   value='<?php echo $question['correct_ans_esp'] ?>'>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="erantzunOkerra1Es">Respuesta incorrecta</label>
+                                            <input name="erantzunOkerra1Es" class="form-control"
+                                                   id="erantzunOkerra1Es-<?php echo $question['questionid']; ?>"
+                                                   value='<?php echo $question['false1_esp'] ?>'>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="erantzunOkerra2Es">Respuesta incorrecta</label>
+                                            <input name="erantzunOkerra2Es" class="form-control"
+                                                   id="erantzunOkerra2Es-<?php echo $question['questionid']; ?>"
+                                                   value='<?php echo $question['false2_esp'] ?>'>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="erantzunOkerra3Es">Respuesta incorrecta</label>
+                                            <input name="erantzunOkerra3Es" class="form-control"
+                                                   id="erantzunOkerra3Es-<?php echo $question['questionid']; ?>"
+                                                   value='<?php echo $question['false3_esp'] ?>'>
+                                        </div>
+
                                     </div>
-                                    <div class="form-group">
-                                        <label for="erantzunOkerra1">Erantzun okerra</label>
-                                        <input name="erantzunOkerra1" class="form-control"
-                                               id="erantzunOkerra1-<?php echo $question['questionid']; ?>"
-                                               value='<?php echo $question['false1'] ?>'>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="erantzunOkerra2">Erantzun okerra</label>
-                                        <input name="erantzunOkerra2" class="form-control"
-                                               id="erantzunOkerra2-<?php echo $question['questionid']; ?>"
-                                               value='<?php echo $question['false2'] ?>'>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="erantzunOkerra3">Erantzun okerra</label>
-                                        <input name="erantzunOkerra3" class="form-control"
-                                               id="erantzunOkerra3-<?php echo $question['questionid']; ?>"
-                                               value='<?php echo $question['false3'] ?>'>
-                                    </div>
+
 
                                 </div>
-                                <div class="col-12 col-lg-6">
-                                    <b>Gaztelera</b>
-                                    <div class="form-group">
-                                        <label for="enuntziatuaEs">Enunciado</label>
-                                        <input name="enuntziatuaEs" class="form-control"
-                                               id="enuntziatuaEs-<?php echo $question['questionid']; ?>"
-                                               value='<?php echo $question['question_esp'] ?>'>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <input type="button" id='save-<?php echo $question['questionid']; ?>'
+                                               class='btn btn-primary' value="Gorde!">
                                     </div>
-                                    <div class="form-group">
-                                        <label for="erantzunZuzenaEs">Respuesta correcta</label>
-                                        <input name="erantzunZuzenaEs" class="form-control"
-                                               id="erantzunZuzenaEs-<?php echo $question['questionid']; ?>"
-                                               value='<?php echo $question['correct_ans_esp'] ?>'>
+                                    <div class="col-6">
+                                        <button type="button" class='btn btn-danger' data-toggle="modal"
+                                                data-target="#deleteQuestionModal"
+                                                data-questionid="<?php echo $question['questionid']; ?>">Ezabatu
+                                        </button>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="erantzunOkerra1Es">Respuesta incorrecta</label>
-                                        <input name="erantzunOkerra1Es" class="form-control"
-                                               id="erantzunOkerra1Es-<?php echo $question['questionid']; ?>"
-                                               value='<?php echo $question['false1_esp'] ?>'>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="erantzunOkerra2Es">Respuesta incorrecta</label>
-                                        <input name="erantzunOkerra2Es" class="form-control"
-                                               id="erantzunOkerra2Es-<?php echo $question['questionid']; ?>"
-                                               value='<?php echo $question['false2_esp'] ?>'>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="erantzunOkerra3Es">Respuesta incorrecta</label>
-                                        <input name="erantzunOkerra3Es" class="form-control"
-                                               id="erantzunOkerra3Es-<?php echo $question['questionid']; ?>"
-                                               value='<?php echo $question['false3_esp'] ?>'>
-                                    </div>
-
                                 </div>
-
-
-                            </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <input type="button" id='save-<?php echo $question['questionid']; ?>'
-                                           class='btn btn-primary' value="Gorde!">
-                                </div>
-                                <div class="col-6">
-                                    <button type="button" class='btn btn-danger' data-toggle="modal"
-                                            data-target="#deleteQuestionModal"
-                                            data-questionid="<?php echo $question['questionid']; ?>">Ezabatu
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <?php
-        }
-        ?>
+                <?php
+            }
+            ?>
+        </div>
 
     </div>
     <div class="container">
@@ -287,11 +297,19 @@ $questions = getQuestions($quizid);
 <div class="card mt-3" id="card-${questionid}">
     <div class="card-header d-flex align-items-center justify-content-between">
         Galdera ${questionid}
-        <button class="btn btn-primary" id="minimize-${questionid}">
-            <i class="material-icons" id="zoomIcon-${questionid}">
-                remove
-            </i>
-        </button>
+        <div>
+            <button class='btn btn-secondary btn-sm' id='up-${questionid}'>
+                <i class='material-icons'>arrow_upward</i>
+            </button>
+            <button class='btn btn-secondary btn-sm' id='down-${questionid}'>
+                <i class='material-icons'>arrow_downward</i>
+            </button>
+            <button class="btn btn-primary btn-sm" id="minimize-${questionid}">
+                <i class="material-icons" id="zoomIcon-${questionid}">
+                    remove
+                </i>
+            </button>
+        </div>
     </div>
     <div class="card-body" id="galderaBody-${questionid}">
         <div class="container">
@@ -392,6 +410,8 @@ $questions = getQuestions($quizid);
         $("#cardContainer").append(questionContent);
         buttonClick($("#save-" + questionid));
         minimizeClick($("#minimize-" + questionid));
+        upQuestion($("#up-" + questionid));
+        downQuestion($("#down-" + questionid));
 
     }
 
@@ -497,6 +517,66 @@ $questions = getQuestions($quizid);
         };
 
         reader.readAsDataURL(selectedFile);
+    }
+
+    $('button[id^="up-"]').each(function (index, upButton) {
+        upQuestion(upButton);
+    });
+
+    function upQuestion(button) {
+        let buttonId = $(button).attr("id");
+        let questionid = buttonId.substring(3, buttonId.length);
+        let quizid = $('#quizid').val();
+
+        $(button).on('click', function () {
+            $.ajax({
+                url: "orderQuestionsUp.php",
+                type: "get",
+                data: {
+                    quizid,
+                    questionid
+                },
+                success: function (response) {
+                    $el = $('#card-' + questionid);
+                    if ($el.not(':first-child'))
+                        $el.prev().before($el);
+                },
+                error: function (xhr) {
+                    alert("Errore bat gertatu da.");
+                }
+            });
+        });
+
+    }
+
+    $('button[id^="down-"]').each(function (index, downButton) {
+        downQuestion(downButton);
+    });
+
+    function downQuestion(button) {
+        let buttonId = $(button).attr("id");
+        let questionid = buttonId.substring(5, buttonId.length);
+        let quizid = $('#quizid').val();
+
+        $(button).on('click', function () {
+            $.ajax({
+                url: "orderQuestionsDown.php",
+                type: "get",
+                data: {
+                    quizid,
+                    questionid
+                },
+                success: function (response) {
+                    $el = $('#card-' + questionid);
+                    if ($el.not(':last-child'))
+                        $el.next().after($el);
+                },
+                error: function (xhr) {
+                    alert("Errore bat gertatu da.");
+                }
+            });
+        });
+
     }
 
 

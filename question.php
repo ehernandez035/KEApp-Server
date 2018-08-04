@@ -15,7 +15,7 @@ if ($mysqli->connect_error) {
     die();
 }
 
-if ($stmt = $mysqli->prepare("SELECT questionid, question, correct_answer, false_answer1, false_answer2, false_answer3 FROM questions WHERE quizid = ?")) {
+if ($stmt = $mysqli->prepare("SELECT questionid, question, correct_answer, false_answer1, false_answer2, false_answer3 FROM questions WHERE quizid = ? ORDER BY position ASC ")) {
     $stmt->bind_param("i", $quizzid);
     $result = $stmt->execute();
     $stmt->store_result();

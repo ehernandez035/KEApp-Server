@@ -25,7 +25,7 @@ FROM quizzes
   LEFT JOIN (SELECT quizid, COUNT(questionid) AS amount
              FROM questions
              GROUP BY quizid) as T1 ON quizzes.quizid=T1.quizid
-  LEFT JOIN answers ON quizzes.quizid=answers.quizid AND userid=?")) {
+  LEFT JOIN answers ON quizzes.quizid=answers.quizid AND userid=? ORDER BY quizzes.position ASC")) {
     $stmt->bind_param("i", $userid);
     $result = $stmt->execute();
     $stmt->bind_result($quizzid, $description, $correctAnswers, $amount);
