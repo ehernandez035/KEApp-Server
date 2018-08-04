@@ -17,6 +17,7 @@ $questions = getQuestions($quizid);
     <link rel="shortcut icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </head>
 <body style="margin-bottom: 100px">
@@ -69,8 +70,15 @@ $questions = getQuestions($quizid);
 
             ?>
             <div class="card mt-3" id="card-<?php echo $question['questionid'] ?>">
-                <div class="card-header">Galdera <?php echo $question['questionid'] ?></div>
-                <div class="card-body">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    Galdera <?php echo $question['questionid'] ?>
+                    <button class="btn btn-primary" id="minimize-<?php echo $question['questionid'] ?>">
+                        <i class="material-icons" id="zoomIcon-<?php echo $question['questionid'] ?>">
+                            remove
+                        </i>
+                    </button>
+                </div>
+                <div class="card-body" id="galderaBody-<?php echo $question['questionid'] ?>">
                     <div class="container">
                         <form id="galderaForm-<?php echo $question['questionid'] ?>">
                             <input type="hidden" name="questionid" value="<?php echo $question['questionid'] ?>">
@@ -92,7 +100,7 @@ $questions = getQuestions($quizid);
                             </div>
                             <div class="row">
 
-                                <div class="col-6">
+                                <div class="col-12 col-lg-6">
                                     <b>Euskera</b>
                                     <div class="form-group">
                                         <label for="enuntziatua">Enuntziatua</label>
@@ -124,10 +132,9 @@ $questions = getQuestions($quizid);
                                                id="erantzunOkerra3-<?php echo $question['questionid']; ?>"
                                                value='<?php echo $question['false3'] ?>'>
                                     </div>
-                                    <input type="button" id='save-<?php echo $question['questionid']; ?>'
-                                           class='btn btn-primary' value="Gorde!">
+
                                 </div>
-                                <div class="col-6">
+                                <div class="col-12 col-lg-6">
                                     <b>Gaztelera</b>
                                     <div class="form-group">
                                         <label for="enuntziatuaEs">Enunciado</label>
@@ -159,13 +166,22 @@ $questions = getQuestions($quizid);
                                                id="erantzunOkerra3Es-<?php echo $question['questionid']; ?>"
                                                value='<?php echo $question['false3_esp'] ?>'>
                                     </div>
+
+                                </div>
+
+
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <input type="button" id='save-<?php echo $question['questionid']; ?>'
+                                           class='btn btn-primary' value="Gorde!">
+                                </div>
+                                <div class="col-6">
                                     <button type="button" class='btn btn-danger' data-toggle="modal"
                                             data-target="#deleteQuestionModal"
                                             data-questionid="<?php echo $question['questionid']; ?>">Ezabatu
                                     </button>
-
                                 </div>
-
                             </div>
                         </form>
                     </div>
@@ -267,11 +283,17 @@ $questions = getQuestions($quizid);
     });
 
     function createQuestion(questionid) {
-        console.log(questionid);
         var questionContent = `
 <div class="card mt-3" id="card-${questionid}">
-    <div class="card-header">Galdera ${questionid}</div>
-    <div class="card-body">
+    <div class="card-header d-flex align-items-center justify-content-between">
+        Galdera ${questionid}
+        <button class="btn btn-primary" id="minimize-${questionid}">
+            <i class="material-icons" id="zoomIcon-${questionid}">
+                remove
+            </i>
+        </button>
+    </div>
+    <div class="card-body" id="galderaBody-${questionid}">
         <div class="container">
             <form id="galderaForm-${questionid}">
             <input type="hidden" name="questionid" value="${questionid}">
@@ -291,7 +313,7 @@ $questions = getQuestions($quizid);
                 </div>
                 <div class="row">
 
-                    <div class="col-6">
+                    <div class="col-12 col-lg-6">
                         <b>Euskera</b>
                         <div class="form-group">
                             <label for="enuntziatua">Enuntziatua</label>
@@ -318,10 +340,8 @@ $questions = getQuestions($quizid);
                             <input name="erantzunOkerra3" class="form-control" id="erantzunOkerra3-${questionid}"
                                    value=''>
                         </div>
-                        <input type="button" id='save-${questionid}'
-                                class='btn btn-primary' value="Gorde!">
                     </div>
-                    <div class="col-6">
+                    <div class="col-12 col-lg-6">
                         <b>Gaztelera</b>
                         <div class="form-group">
                             <label for="enuntziatuaEs">Enunciado</label>
@@ -351,18 +371,27 @@ $questions = getQuestions($quizid);
                                    id="erantzunOkerra3Es-${questionid}"
                                    value=''>
                         </div>
-                        <button type="button" class='btn btn-danger' data-toggle="modal"
-                                data-target="#deleteQuestionModal"
-                                data-questionid="${questionid}">Ezabatu
-                        </button>
                     </div>
                 </div>
+                 <div class="row">
+                                <div class="col-6">
+                                    <input type="button" id='save-${questionid}'
+                                           class='btn btn-primary' value="Gorde!">
+                                </div>
+                                <div class="col-6">
+                                    <button type="button" class='btn btn-danger' data-toggle="modal"
+                                            data-target="#deleteQuestionModal"
+                                            data-questionid="${questionid}">Ezabatu
+                                    </button>
+                                </div>
+                            </div>
             </form>
         </div>
     </div>
 </div>`;
         $("#cardContainer").append(questionContent);
-        buttonClick($("#save-"+questionid));
+        buttonClick($("#save-" + questionid));
+        minimizeClick($("#minimize-" + questionid));
 
     }
 
@@ -428,6 +457,33 @@ $questions = getQuestions($quizid);
         });
     }
 
+    $('button[id^="minimize-"]').each(function (index, minimizeButton) {
+        minimizeClick(minimizeButton);
+    });
+
+    function minimizeClick(minimizeButton) {
+        let buttonId = $(minimizeButton).attr("id");
+        let questionid = buttonId.substring(9, buttonId.length);
+
+        $(minimizeButton).unbind("click").on('click', function () {
+            $("#galderaBody-" + questionid).slideUp();
+            $("#zoomIcon-" + questionid).html("add");
+            maximizeClick(minimizeButton);
+        });
+
+    }
+
+    function maximizeClick(maximizeButton) {
+        let buttonId = $(maximizeButton).attr("id");
+        let questionid = buttonId.substring(9, buttonId.length);
+
+        $(maximizeButton).unbind("click").on('click', function () {
+            $("#galderaBody-" + questionid).slideDown();
+            $("#zoomIcon-" + questionid).html("remove");
+            minimizeClick(maximizeButton);
+        });
+
+    }
 
     function onFileSelected(event, questionid) {
         var selectedFile = event.target.files[0];

@@ -4,6 +4,8 @@ require_once "checkOnline.php";
 checkOnline(true);
 
 $quizzes = getQuizzes();
+$firstQuiz = firstQuiz();
+$lastQuiz = lastQuiz();
 
 ?>
 <!doctype html>
@@ -16,11 +18,13 @@ $quizzes = getQuizzes();
 
     <link rel="shortcut icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body style="margin-bottom: 100px">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="menu.php">KEApp</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -39,6 +43,9 @@ $quizzes = getQuizzes();
             <th>Descripción</th>
             <th></th>
             <th></th>
+            <th></th>
+            <th></th>
+
         </tr>
         <?php
         foreach ($quizzes as $quiz) {
@@ -49,6 +56,16 @@ $quizzes = getQuizzes();
             echo "<td><a class='btn btn-primary' href='adminquestions.php?quizid=$quiz[id]'>Ireki</a></td>";
             echo "<td><button class='btn btn-danger' type='button' data-target='#deleteQuestionModal' data-toggle='modal'
                                             data-quizid='$quiz[id]'>Ezabatu</button></td>";
+            if ($quiz["id"] != $firstQuiz) {
+                echo "<td><a class='btn btn-primary' id='up-$quiz[id]' href='orderQuizzesUP.php?quizid=$quiz[id]'><i class='material-icons'>arrow_upward</i></a></td>";
+            } else {
+                echo "<td></td>";
+            }
+            if ($quiz["id"] != $lastQuiz) {
+                echo "<td><a class='btn btn-primary' id='down-$quiz[id]'href='orderQuizzesDown.php?quizid=$quiz[id]'><i class='material-icons'>arrow_downward</i></a></td>";
+            } else {
+                echo "<td></td>";
+            }
             echo "</tr>";
 
 
@@ -57,7 +74,7 @@ $quizzes = getQuizzes();
 </div>
 <div class="container">
     <div class="text-center mt-3">
-        <a type="button" href="addQuiz.php" class='btn btn-primary'>Galdetegi berria gehitu</a>
+        <a href="addQuiz.php" class='btn btn-primary'>Galdetegi berria gehitu</a>
     </div>
 </div>
 <footer class="page-footer font-small bg-primary text-light fixed-bottom">
@@ -102,8 +119,8 @@ $quizzes = getQuizzes();
         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this);
-        modal.find('#delete-quiz-confirm').attr('href', "deleteQuiz.php?quizid="+quizid);
-    })
+        modal.find('#delete-quiz-confirm').attr('href', "deleteQuiz.php?quizid=" + quizid);
+    });
 </script>
 </body>
 </html>

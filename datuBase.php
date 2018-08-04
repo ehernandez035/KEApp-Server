@@ -8,7 +8,7 @@ if ($mysqli->connect_error) {
 function getQuizzes()
 {
     global $mysqli;
-    if ($stmt = $mysqli->prepare("SELECT quizid, description, description_esp FROM quizzes")) {
+    if ($stmt = $mysqli->prepare("SELECT quizid, description, description_esp FROM quizzes ORDER BY position ASC")) {
 
         if ($stmt->execute()) {
             $stmt->bind_result($id, $description, $description_es);
@@ -41,7 +41,8 @@ function getQuestions($qid)
     return null;
 }
 
-function getUsers(){
+function getUsers()
+{
     global $mysqli;
     if ($stmt = $mysqli->prepare("SELECT userid, username, email FROM users")) {
 
@@ -50,9 +51,37 @@ function getUsers(){
             $stmt->store_result();
             $users = array();
             while ($stmt->fetch()) {
-                $users[] = array("userid" =>$userid, "username" => $username, "email" => $email);
+                $users[] = array("userid" => $userid, "username" => $username, "email" => $email);
             }
             return $users;
+        }
+    }
+    return null;
+}
+
+function firstQuiz()
+{
+    global $mysqli;
+    if ($stmt = $mysqli->prepare("SELECT quizid FROM quizzes ORDER BY position ASC LIMIT 1")) {
+        if ($stmt->execute()) {
+            $stmt->store_result();
+            $stmt->bind_result($quizid);
+            $stmt->fetch();
+            return $quizid;
+        }
+    }
+    return null;
+}
+
+function lastQuiz()
+{
+    global $mysqli;
+    if ($stmt = $mysqli->prepare("SELECT quizid FROM quizzes ORDER BY position DESC LIMIT 1")) {
+        if ($stmt->execute()) {
+            $stmt->store_result();
+            $stmt->bind_result($quizid);
+            $stmt->fetch();
+            return $quizid;
         }
     }
     return null;
