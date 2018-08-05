@@ -29,7 +29,7 @@ $lastQuiz = lastQuiz();
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link" href="adminquestions.php">Galdetegiak</a>
+            <a class="nav-item nav-link" href="#">Galdetegiak</a>
         </div>
     </div>
 </nav>
@@ -78,13 +78,14 @@ $lastQuiz = lastQuiz();
     </div>
 </div>
 <footer class="page-footer font-small bg-primary text-light fixed-bottom">
-
+    <div style="display: flex; vertical-align: middle; justify-content: center">
+        <i class="material-icons" >email</i>:<i class="ml-2">keaaplikazioa@gmail.com</i>
+    </div>
     <!-- Copyright -->
     <div class="footer-copyright text-center py-3">© 2018 Copyright:
         <a href="https://github.com/ehernandez035/" class="text-light"> GPL-3.0 lizentziapean</a>
     </div>
     <!-- Copyright -->
-
 </footer>
 
 <!-- Modal -->

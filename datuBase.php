@@ -86,3 +86,33 @@ function lastQuiz()
     }
     return null;
 }
+
+function firstQuestion($quid)
+{
+    global $mysqli;
+    if ($stmt = $mysqli->prepare("SELECT questionid FROM questions WHERE quizid=? ORDER BY position ASC LIMIT 1")) {
+        $stmt->bind_param("i", $quid);
+        if ($stmt->execute()) {
+            $stmt->store_result();
+            $stmt->bind_result($questionid);
+            $stmt->fetch();
+            return $questionid;
+        }
+    }
+    return null;
+}
+
+function lastQuestion($quid)
+{
+    global $mysqli;
+    if ($stmt = $mysqli->prepare("SELECT questionid FROM questions WHERE quizid=? ORDER BY position DESC LIMIT 1")) {
+        $stmt->bind_param("i", $quid);
+        if ($stmt->execute()) {
+            $stmt->store_result();
+            $stmt->bind_result($questionid);
+            $stmt->fetch();
+            return $questionid;
+        }
+    }
+    return null;
+}

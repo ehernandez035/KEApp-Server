@@ -74,12 +74,26 @@ $questions = getQuestions($quizid);
                     <div class="card-header d-flex align-items-center justify-content-between">
                         Galdera <?php echo $question['questionid'] ?>
                         <div>
-                            <button class='btn btn-secondary btn-sm' id='up-<?php echo $question['questionid'] ?>'>
+                            <?php
+                            if($question['questionid']==firstQuestion($quizid)){
+                                echo "<button class='btn btn-secondary btn-sm' id='up-$question[questionid]' disabled>";
+                            }else{
+                                echo "<button class='btn btn-secondary btn-sm' id='up-$question[questionid]'>";
+                            }
+                            ?>
                                 <i class='material-icons'>arrow_upward</i>
                             </button>
-                            <button class='btn btn-secondary btn-sm' id='down-<?php echo $question['questionid'] ?>'>
+
+                            <?php
+                            if($question['questionid']==lastQuestion($quizid)){
+                                echo "<button class='btn btn-secondary btn-sm' id='down-$question[questionid]' disabled>";
+                            }else{
+                                echo "<button class='btn btn-secondary btn-sm' id='down-$question[questionid]'>";
+                            }
+                            ?>
                                 <i class='material-icons'>arrow_downward</i>
                             </button>
+
                             <button class="btn btn-primary btn-sm" id="minimize-<?php echo $question['questionid'] ?>">
                                 <i class="material-icons" id="zoomIcon-<?php echo $question['questionid'] ?>">
                                     remove
@@ -253,13 +267,14 @@ $questions = getQuestions($quizid);
 
 
 <footer class="page-footer font-small bg-primary text-light fixed-bottom">
-
+    <div style="display: flex; vertical-align: middle; justify-content: center">
+        <i class="material-icons" >email</i>:<i class="ml-2">keaaplikazioa@gmail.com</i>
+    </div>
     <!-- Copyright -->
     <div class="footer-copyright text-center py-3">© 2018 Copyright:
         <a href="https://github.com/ehernandez035/" class="text-light"> GPL-3.0 lizentziapean</a>
     </div>
     <!-- Copyright -->
-
 </footer>
 
 <script language="JavaScript" src="js/jquery-3.3.1.min.js"></script>
@@ -283,6 +298,7 @@ $questions = getQuestions($quizid);
                 success: function (response) {
                     $('#card-' + questionid).slideUp();
                     $('#deleteQuestionModal').modal('hide');
+                    updateArrows();
                 },
                 error: function (xhr) {
                     alert("Errore bat gertatu da.");
@@ -410,9 +426,17 @@ $questions = getQuestions($quizid);
         $("#cardContainer").append(questionContent);
         buttonClick($("#save-" + questionid));
         minimizeClick($("#minimize-" + questionid));
+        updateArrows();
         upQuestion($("#up-" + questionid));
         downQuestion($("#down-" + questionid));
 
+    }
+    function updateArrows( ) {
+        $('div[id^="card-"]').find("button[id^='up-']").removeAttr("disabled");
+        $('div[id^="card-"]').find("button[id^='down-']").removeAttr("disabled");
+
+        $('div[id^="card-"]').first().find("button[id^='up-']").attr("disabled", "");
+        $('div[id^="card-"]').last().find("button[id^='down-']").attr("disabled", "");
     }
 
     $('#addQuestionButton').click(function () {
