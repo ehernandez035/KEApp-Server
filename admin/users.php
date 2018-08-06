@@ -3,8 +3,14 @@ require_once "../datuBase.php";
 require_once "checkOnline.php";
 checkOnline(true);
 
-$users = getUsers();
-
+$class=$_GET['usergroup'];
+if($class=="g"){
+    $users=getGazteleraUsers();
+}elseif ($class=="e"){
+    $users=getEuskeraUsers();
+}else{
+    $users = getUsers();
+}
 ?>
 <!doctype html>
 <html>
@@ -20,7 +26,8 @@ $users = getUsers();
 <body style="margin-bottom: 100px">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="menu.php">KEApp</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -29,6 +36,11 @@ $users = getUsers();
         </div>
     </div>
 </nav>
+<div class="text-center">
+    <a class='btn btn-secondary' id="gaztUsers" href='users.php?usergroup=g' >Gaztelerako ikasleak</a>
+    <a class='btn btn-secondary' id="euskUsers" href='users.php?usergroup=e' >Euskarako ikasleak</a>
+
+</div>
 <div class="container mt-3">
 
     <h1>KEApp kudeaketa</h1>
@@ -38,6 +50,7 @@ $users = getUsers();
             <th>Email helbidea</th>
             <th></th>
             <th></th>
+            <th>Erabiltzaileen taldea</th>
         </tr>
         <?php
         foreach ($users as $user) {
@@ -51,8 +64,19 @@ $users = getUsers();
 mail
 </i>
 </button></td> ";
-            echo "</tr>";
+            echo "<td><div class=\"btn-group btn-group-toggle\" data-toggle=\"buttons\" id='divBut-$user[userid]'>
+  <label class=\"btn btn-secondary active\" id='b-$user[userid]'>
+    <input type=\"radio\" name=\"besteak\" autocomplete=\"off\" checked> B
+  </label>
+  <label class=\"btn btn-secondary\" id='g-$user[userid]'>
+    <input type=\"radio\" name=\"gaztelera\"   autocomplete=\"off\"> G
+  </label>
+  <label class=\"btn btn-secondary\" id='e-$user[userid]'>
+    <input type=\"radio\" name=\"euskara\" autocomplete=\"off\"> E
+  </label>
+</div></td>";
 
+            echo "</tr>";
 
         } ?>
     </table>
@@ -60,7 +84,7 @@ mail
 
 <footer class="page-footer font-small bg-primary text-light fixed-bottom">
     <div style="display: flex; vertical-align: middle; justify-content: center">
-        <i class="material-icons" >email</i>:<a class="ml-2" href="mailto:keaaplikazioa@gmail.com" style="color: white">keaaplikazioa@gmail.com</a>
+        <i class="material-icons">email</i>:<a class="ml-2" href="mailto:keaaplikazioa@gmail.com" style="color: white">keaaplikazioa@gmail.com</a>
     </div>
     <!-- Copyright -->
     <div class="footer-copyright text-center py-3">© 2018 Copyright:
@@ -140,6 +164,57 @@ mail
         modal.find('#emailInput').val(email);
         modal.find('#sendButtonConfirm').click(function () {
             modal.find('#messageForm').submit();
+        })
+    });
+
+    $('div[id^="divBut-"]').each(function (index, selectedButton) {
+        let buttonId = $(selectedButton).attr("id");
+        let userid = buttonId.substring(7, buttonId.length);
+
+        $('#g-' + userid).click(function () {
+            $.ajax({
+                url: "usergroup.php",
+                type: "get",
+                data: {
+                    userid,
+                    usergroup: "g"
+                },
+                success: function (response) {
+                },
+                error: function (xhr) {
+                    alert("Errore bat gertatu da.");
+                }
+            });
+        });
+        $('#e-' + userid).on("click", function () {
+            $.ajax({
+                url: "usergroup.php",
+                type: "get",
+                data: {
+                    userid,
+                    usergroup: "e"
+                },
+                success: function (response) {
+                },
+                error: function (xhr) {
+                    alert("Errore bat gertatu da.");
+                }
+            });
+        });
+        $('#b-' + userid).on("click", function () {
+            $.ajax({
+                url: "usergroup.php",
+                type: "get",
+                data: {
+                    userid,
+                    usergroup: "b"
+                },
+                success: function (response) {
+                },
+                error: function (xhr) {
+                    alert("Errore bat gertatu da.");
+                }
+            });
         })
     });
 

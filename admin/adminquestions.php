@@ -489,7 +489,6 @@ $questions = getQuestions($quizid);
         let questionid = buttonId.substring(5, buttonId.length);
 
         $(saveButton).on('click', function () {
-            console.log("clicked");
             $("#galderaForm-" + questionid).ajaxSubmit({
                 url: 'updateQuestions.php',
                 type: 'post',

@@ -59,6 +59,46 @@ function getUsers()
     return null;
 }
 
+function getGazteleraUsers()
+{
+    global $mysqli;
+    $class = $_GET["class"];
+
+    if ($stmt = $mysqli->prepare("SELECT userid, username, email FROM users WHERE usergroup='g'")) {
+        $stmt->bind_param("s", $class);
+        if ($stmt->execute()) {
+            $stmt->bind_result($userid, $username, $email);
+            $stmt->store_result();
+            $users = array();
+            while ($stmt->fetch()) {
+                $users[] = array("userid" => $userid, "username" => $username, "email" => $email);
+            }
+            return $users;
+        }
+        return null;
+    }
+}
+
+function getEuskeraUsers()
+{
+    global $mysqli;
+    $class = $_GET["class"];
+
+    if ($stmt = $mysqli->prepare("SELECT userid, username, email FROM users WHERE usergroup='e'")) {
+        $stmt->bind_param("s", $class);
+        if ($stmt->execute()) {
+            $stmt->bind_result($userid, $username, $email);
+            $stmt->store_result();
+            $users = array();
+            while ($stmt->fetch()) {
+                $users[] = array("userid" => $userid, "username" => $username, "email" => $email);
+            }
+            return $users;
+        }
+        return null;
+    }
+}
+
 function firstQuiz()
 {
     global $mysqli;
