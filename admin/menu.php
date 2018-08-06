@@ -16,6 +16,7 @@ $quizzes = getQuizzes();
 
     <link rel="shortcut icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body style="margin-bottom: 100px">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -29,18 +30,33 @@ $quizzes = getQuizzes();
 
     <h1>KEApp kudeaketa</h1>
 
-    <div class="text-center">
+
+    <div class="card text-center mb-3" style="margin: auto; width: 75%">
+        <h5 class="card-header">Galdetegiak</h5>
+        <div class="card-body">
+            <i class="material-icons" style="font-size: 5em">
+                assignment
+            </i>
+        <p class="card-text">Galdetegiak eta hauetan dauden galderen edukia antolatzeko gunea.</p>
         <a class='btn btn-primary' href="admin.php">Galdetegiak</a>
+        </div>
+    </div>
+    <div class="card text-center mb-3" style="margin: auto; width: 75%">
+        <h5 class="card-header">Erabiltzaileak</h5>
+        <div class="card-body">
+            <i class="material-icons" style="font-size: 5em">
+                account_circle
+            </i>
+        <p class="card-text">Erabiltzaileen kontuak antolatzeko gunea.</p>
+        <a class='btn btn-primary' href="users.php">Erabiltzaileak</a>
+        </div>
     </div>
 
-    <div class="text-center mt-3">
-        <a class='btn btn-primary' href="users.php">Erabiltzaileak</a>
-    </div>
 </div>
 
 <footer class="page-footer font-small bg-primary text-light fixed-bottom">
     <div style="display: flex; vertical-align: middle; justify-content: center">
-        <i class="material-icons" >email</i>:<i class="ml-2">keaaplikazioa@gmail.com</i>
+        <i class="material-icons" >email</i>:<a class="ml-2" href="mailto:keaaplikazioa@gmail.com" style="color: white">keaaplikazioa@gmail.com</a>
     </div>
     <!-- Copyright -->
     <div class="footer-copyright text-center py-3">© 2018 Copyright:

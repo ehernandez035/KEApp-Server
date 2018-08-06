@@ -268,7 +268,7 @@ $questions = getQuestions($quizid);
 
 <footer class="page-footer font-small bg-primary text-light fixed-bottom">
     <div style="display: flex; vertical-align: middle; justify-content: center">
-        <i class="material-icons" >email</i>:<i class="ml-2">keaaplikazioa@gmail.com</i>
+        <i class="material-icons" >email</i>:<a class="ml-2" href="mailto:keaaplikazioa@gmail.com" style="color: white">keaaplikazioa@gmail.com</a>
     </div>
     <!-- Copyright -->
     <div class="footer-copyright text-center py-3">© 2018 Copyright:
