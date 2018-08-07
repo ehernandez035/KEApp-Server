@@ -44,14 +44,14 @@ function getQuestions($qid)
 function getUsers()
 {
     global $mysqli;
-    if ($stmt = $mysqli->prepare("SELECT userid, username, email FROM users")) {
+    if ($stmt = $mysqli->prepare("SELECT userid, username, usergroup, email FROM users")) {
 
         if ($stmt->execute()) {
-            $stmt->bind_result($userid, $username, $email);
+            $stmt->bind_result($userid, $username, $usergroup, $email);
             $stmt->store_result();
             $users = array();
             while ($stmt->fetch()) {
-                $users[] = array("userid" => $userid, "username" => $username, "email" => $email);
+                $users[] = array("userid" => $userid, "username" => $username, "usergroup" => $usergroup, "email" => $email);
             }
             return $users;
         }
@@ -64,14 +64,14 @@ function getGazteleraUsers()
     global $mysqli;
     $class = $_GET["class"];
 
-    if ($stmt = $mysqli->prepare("SELECT userid, username, email FROM users WHERE usergroup='g'")) {
+    if ($stmt = $mysqli->prepare("SELECT userid, username, usergroup, email FROM users WHERE usergroup='g'")) {
         $stmt->bind_param("s", $class);
         if ($stmt->execute()) {
-            $stmt->bind_result($userid, $username, $email);
+            $stmt->bind_result($userid, $username, $usergroup, $email);
             $stmt->store_result();
             $users = array();
             while ($stmt->fetch()) {
-                $users[] = array("userid" => $userid, "username" => $username, "email" => $email);
+                $users[] = array("userid" => $userid, "username" => $username, "usergroup" => $usergroup,"email" => $email);
             }
             return $users;
         }
@@ -84,14 +84,14 @@ function getEuskeraUsers()
     global $mysqli;
     $class = $_GET["class"];
 
-    if ($stmt = $mysqli->prepare("SELECT userid, username, email FROM users WHERE usergroup='e'")) {
+    if ($stmt = $mysqli->prepare("SELECT userid, username, usergroup, email FROM users WHERE usergroup='e'")) {
         $stmt->bind_param("s", $class);
         if ($stmt->execute()) {
-            $stmt->bind_result($userid, $username, $email);
+            $stmt->bind_result($userid, $username, $usergroup, $email);
             $stmt->store_result();
             $users = array();
             while ($stmt->fetch()) {
-                $users[] = array("userid" => $userid, "username" => $username, "email" => $email);
+                $users[] = array("userid" => $userid, "username" => $username, "usergroup" => $usergroup, "email" => $email);
             }
             return $users;
         }

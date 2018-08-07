@@ -25,7 +25,7 @@ if($class=="g"){
 </head>
 <body style="margin-bottom: 100px">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="menu.php">KEApp</a>
+    <a class="navbar-brand" href="menu.php"> <img src="logo.png" style="width: 30px; height: 30px;" class="d-inline-block align-top mr-2">KEApp</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -36,7 +36,7 @@ if($class=="g"){
         </div>
     </div>
 </nav>
-<div class="text-center">
+<div class="text-center mt-3">
     <a class='btn btn-secondary' id="gaztUsers" href='users.php?usergroup=g' >Gaztelerako ikasleak</a>
     <a class='btn btn-secondary' id="euskUsers" href='users.php?usergroup=e' >Euskarako ikasleak</a>
 
@@ -64,18 +64,18 @@ if($class=="g"){
 mail
 </i>
 </button></td> ";
-            echo "<td><div class=\"btn-group btn-group-toggle\" data-toggle=\"buttons\" id='divBut-$user[userid]'>
-  <label class=\"btn btn-secondary active\" id='b-$user[userid]'>
-    <input type=\"radio\" name=\"besteak\" autocomplete=\"off\" checked> B
+            ?> <td><div class="btn-group btn-group-toggle" data-toggle="buttons" id='divBut-<?php echo $user['userid'] ?>'>
+  <label class="btn btn-secondary <?php if($user['usergroup']==="b") echo "active";?>" id='b-<?php echo $user['userid'] ?>'>
+    <input type="radio" name="besteak" autocomplete="off" <?php if($user['usergroup']=="b") echo "checked";?>> B
   </label>
-  <label class=\"btn btn-secondary\" id='g-$user[userid]'>
-    <input type=\"radio\" name=\"gaztelera\"   autocomplete=\"off\"> G
+  <label class="btn btn-secondary <?php if($user['usergroup']==="g") echo "active";?>" id='g-<?php echo $user['userid'] ?>'>
+    <input type="radio" name="gaztelera"   autocomplete="off" <?php if($user['usergroup']=="g") echo "checked";?>> G
   </label>
-  <label class=\"btn btn-secondary\" id='e-$user[userid]'>
-    <input type=\"radio\" name=\"euskara\" autocomplete=\"off\"> E
+  <label class="btn btn-secondary <?php if($user['usergroup']==="e") echo "active";?>" id='e-<?php echo $user['userid'] ?>'>
+    <input type="radio" name="euskara" autocomplete="off" <?php if($user['usergroup']=="e") echo "checked";?>> E
   </label>
-</div></td>";
-
+</div></td>
+<?php
             echo "</tr>";
 
         } ?>
@@ -170,7 +170,6 @@ mail
     $('div[id^="divBut-"]').each(function (index, selectedButton) {
         let buttonId = $(selectedButton).attr("id");
         let userid = buttonId.substring(7, buttonId.length);
-
         $('#g-' + userid).click(function () {
             $.ajax({
                 url: "usergroup.php",
