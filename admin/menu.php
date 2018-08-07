@@ -54,7 +54,7 @@ $quizzes = getQuizzes();
             <i class="material-icons" style="font-size: 5em">
                 assessment
             </i>
-            <p class="card-text">Erabiltzaileen kontuak antolatzeko gunea.</p>
+            <p class="card-text">Galdetegi bakoitzaren asmatze-tasa.</p>
             <a class='btn btn-primary' href="stats.php">Emaitzak</a>
         </div>
     </div>

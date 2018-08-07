@@ -31,14 +31,20 @@ $quizzes = getQuizzes();
 
     <?php
     foreach ($quizzes as $quiz) {
-        echo "<div class=\"card text-center mb-3\" style=\"margin: auto; width: 75%\">";
         $answersPerQuiz = answersPerQuiz($quiz['id']);
         $pointsperQuiz = quizPoints($quiz['id']);
         $answersPerQuiz = answersPerQuiz($quiz['id']);
-        $percentage = $answersPerQuiz == 0 ? "0.00" : number_format($pointsperQuiz / ($answersPerQuiz * $answersPerQuiz) * 100, 2);
-        echo "<h5 class=\"card-header\">$quiz[id] galdetegia</h5>";
+        $percentage = $answersPerQuiz == 0 ? 0 : round($pointsperQuiz / ($answersPerQuiz * $answersPerQuiz) * 100, 2);
+        $lerp=$percentage/100;
+        $redC = 0xFF0000;         // Only Red
+        $greenC = 0x009900 + ((0x00FF00 - 0x009900) * $lerp) & 0x00FF00; // Only Green
+        $blueC = 0x000099 + ((0x000066 - 0x000099) * $lerp) & 0x0000FF;     // Only Blue
+        $result = dechex($redC | $greenC | $blueC);
+        $color = str_pad($result, 6, "0", STR_PAD_LEFT);
+        echo "<div class=\"card text-center mb-3\" style=\"margin: auto; width: 75%\" >";
+        echo "<h5 class=\"card-header\" style=' background-color: #$color'>$quiz[id] galdetegia</h5>";
         echo "<div class='card-body'>";
-        echo "% " . $percentage;
+        echo "% " . number_format($percentage,2);
         echo "</div>";
         echo "</div>";
 
