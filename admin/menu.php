@@ -48,6 +48,16 @@ $quizzes = getQuizzes();
         <a class='btn btn-primary' href="users.php">Erabiltzaileak</a>
         </div>
     </div>
+    <div class="card text-center mb-3" style="margin: auto; width: 75%">
+        <h5 class="card-header">Emaitzak</h5>
+        <div class="card-body">
+            <i class="material-icons" style="font-size: 5em">
+                assessment
+            </i>
+            <p class="card-text">Erabiltzaileen kontuak antolatzeko gunea.</p>
+            <a class='btn btn-primary' href="stats.php">Emaitzak</a>
+        </div>
+    </div>
 
 </div>
 

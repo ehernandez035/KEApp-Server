@@ -71,7 +71,7 @@ function getGazteleraUsers()
             $stmt->store_result();
             $users = array();
             while ($stmt->fetch()) {
-                $users[] = array("userid" => $userid, "username" => $username, "usergroup" => $usergroup,"email" => $email);
+                $users[] = array("userid" => $userid, "username" => $username, "usergroup" => $usergroup, "email" => $email);
             }
             return $users;
         }
@@ -155,4 +155,78 @@ function lastQuestion($quid)
         }
     }
     return null;
+}
+
+function getAnswers()
+{
+    global $mysqli;
+    if ($stmt = $mysqli->prepare("SELECT quizid, userid, correctnumber FROM answers")) {
+
+        if ($stmt->execute()) {
+            $stmt->bind_result($quizid, $userid, $correctnumber);
+            $stmt->store_result();
+            $answers = array();
+            while ($stmt->fetch()) {
+                $answers[] = array("quizid" => $quizid, "userid" => $userid, "correctnumber" => $correctnumber);
+            }
+            return $answers;
+        }
+    }
+    return null;
+}
+
+function quizPoints($quizid)
+{
+    global $mysqli;
+    if ($stmt = $mysqli->prepare("SELECT SUM(correctnumber) FROM answers WHERE quizid=?")) {
+        $stmt->bind_param("i", $quizid);
+        if ($stmt->execute()) {
+            $stmt->store_result();
+            $stmt->bind_result($total);
+            $stmt->fetch();
+            return $total;
+        } else {
+            http_response_code(500);
+            echo $mysqli->error;
+            return null;
+        }
+    }
+}
+
+function answersPerQuiz($quizid)
+{
+    global $mysqli;
+    if ($stmt = $mysqli->prepare("SELECT COUNT(userid) FROM answers WHERE quizid=?")) {
+        $stmt->bind_param("i", $quizid);
+        if ($stmt->execute()) {
+            $stmt->store_result();
+            $stmt->bind_result($total);
+            $stmt->fetch();
+            return $total;
+        } else {
+            http_response_code(500);
+            echo $mysqli->error;
+            return null;
+        }
+    }
+
+}
+
+function questionsPerQuiz($quizid)
+{
+    global $mysqli;
+    if ($stmt = $mysqli->prepare("SELECT COUNT(questionid) FROM questions WHERE quizid=?")) {
+        $stmt->bind_param("i", $quizid);
+        if ($stmt->execute()) {
+            $stmt->store_result();
+            $stmt->bind_result($total);
+            $stmt->fetch();
+            return $total;
+        } else {
+            http_response_code(500);
+            echo $mysqli->error;
+            return null;
+        }
+    }
+
 }
