@@ -21,6 +21,8 @@ $false2_esp = $_POST["erantzunOkerra2Es"];
 $false3_esp = $_POST["erantzunOkerra3Es"];
 $question = $_POST["enuntziatua"];
 $question_esp = $_POST["enuntziatuaEs"];
+$note = $_POST["note"];
+$noteEs = $_POST["noteEs"];
 $img = $_FILES['img'];
 if (strlen($_FILES['img']['name']) > 0) {
     $image_link=$_FILES['img']['name'];
@@ -33,8 +35,8 @@ if (strlen($_FILES['img']['name']) > 0) {
         die();
     }
 }
-if ($stmt = $mysqli->prepare("UPDATE questions SET correct_answer=?, correct_answer_esp=?, false_answer1=?, false_answer1_esp=?,false_answer2=?, false_answer2_esp=?, false_answer3=?, false_answer3_esp=?, question=?, question_esp=? WHERE questionid=?")) {
-    $stmt->bind_param("ssssssssssi", $correct_ans, $correct_ans_esp, $false1, $false1_esp, $false2, $false2_esp, $false3, $false3_esp, $question, $question_esp, $questionid);
+if ($stmt = $mysqli->prepare("UPDATE questions SET correct_answer=?, correct_answer_esp=?, false_answer1=?, false_answer1_esp=?,false_answer2=?, false_answer2_esp=?, false_answer3=?, false_answer3_esp=?, question=?, question_esp=?, note=?, noteEs=? WHERE questionid=?")) {
+    $stmt->bind_param("ssssssssssssi", $correct_ans, $correct_ans_esp, $false1, $false1_esp, $false2, $false2_esp, $false3, $false3_esp, $question, $question_esp, $note, $noteEs, $questionid);
     if ($stmt->execute()) {
         die();
     }

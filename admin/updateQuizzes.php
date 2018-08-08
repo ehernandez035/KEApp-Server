@@ -13,9 +13,10 @@ if ($mysqli->connect_error) {
 $quid = $_POST["quizid"];
 $deskribapena = $_POST["deskribapena"];
 $descripcion = $_POST["descripcion"];
+$puntuable = $_POST["puntuable"];
 
-if ($stmt = $mysqli->prepare("UPDATE quizzes SET description=?, description_esp=? WHERE quizid=?")) {
-    $stmt->bind_param("ssi", $deskribapena, $descripcion, $quid);
+if ($stmt = $mysqli->prepare("UPDATE quizzes SET description=?, description_esp=?, puntuable=? WHERE quizid=?")) {
+    $stmt->bind_param("ssii", $deskribapena, $descripcion, $puntuable, $quid);
     if ($stmt->execute()) {
         header('Location: adminquestions.php?quizid=' . $quid);
     }

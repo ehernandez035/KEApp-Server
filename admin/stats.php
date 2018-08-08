@@ -5,6 +5,7 @@ checkOnline(true);
 
 $answers = getAnswers();
 $quizzes = getQuizzes();
+$class=$_GET["usergroup"];
 
 ?>
 <!doctype html>
@@ -23,18 +24,33 @@ $quizzes = getQuizzes();
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="menu.php"><img src="logo.png" style="width: 30px; height: 30px;"
                                                  class="d-inline-block align-top mr-2">KEApp</a>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="stats.php">Emaitzak</a>
+        </div>
+    </div>
 </nav>
 
 <div class="container mt-3">
 
     <h1>KEApp kudeaketa</h1>
 
+    <div class="text-center mt-3 mb-3">
+        <a class='btn btn-secondary' id="gaztUsers" href='stats.php?usergroup=g' >Gaztelerako emaitzak</a>
+        <a class='btn btn-secondary' id="euskUsers" href='stats.php?usergroup=e' >Euskarako emaitzak</a>
+
+    </div>
     <?php
     foreach ($quizzes as $quiz) {
-        $answersPerQuiz = answersPerQuiz($quiz['id']);
-        $pointsperQuiz = quizPoints($quiz['id']);
-        $answersPerQuiz = answersPerQuiz($quiz['id']);
-        $percentage = $answersPerQuiz == 0 ? 0 : round($pointsperQuiz / ($answersPerQuiz * $answersPerQuiz) * 100, 2);
+        if(isset($class)){
+            $totalPoints=getGroupPoints($quiz['id'], $class);
+            $answersPerQuiz = answersPerQuizGroup($quiz['id'], $class);
+        }else{
+            $totalPoints = quizPoints($quiz['id']);
+            $answersPerQuiz = answersPerQuiz($quiz['id']);
+        }
+        $questionNumber=questionsPerQuiz($quiz['id']);
+        $percentage = $answersPerQuiz == 0 ? 0 : round($totalPoints / ($answersPerQuiz * $questionNumber) * 100, 2);
         $lerp=$percentage/100;
         $redC = 0xFF0000;         // Only Red
         $greenC = 0x009900 + ((0x00FF00 - 0x009900) * $lerp) & 0x00FF00; // Only Green

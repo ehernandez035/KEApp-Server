@@ -41,6 +41,7 @@ $lastQuiz = lastQuiz();
             <th>ID</th>
             <th>Deskribapena</th>
             <th>Descripción</th>
+            <th>Puntuaziorako da?</th>
             <th></th>
             <th></th>
             <th></th>
@@ -53,6 +54,11 @@ $lastQuiz = lastQuiz();
             echo "<td>$quiz[id]</td>";
             echo "<td>$quiz[description]</td>";
             echo "<td>$quiz[description_es]</td>";
+            echo "<td class='text-center'><div class=\"custom-control custom-checkbox\" >
+              <input type=\"checkbox\" class=\"custom-control-input\" id=\"check-".$quiz['id']. '" ' .
+                (isQuizPunctuable($quiz['id'])==1? "checked" : "") . ">
+              <label class=\"custom-control-label\" for=\"check-$quiz[id]\"></label>
+            </div></td>";
             echo "<td><a class='btn btn-primary' href='adminquestions.php?quizid=$quiz[id]'>Ireki</a></td>";
             echo "<td><button class='btn btn-danger' type='button' data-target='#deleteQuestionModal' data-toggle='modal'
                                             data-quizid='$quiz[id]'>Ezabatu</button></td>";
@@ -121,6 +127,33 @@ $lastQuiz = lastQuiz();
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this);
         modal.find('#delete-quiz-confirm').attr('href', "deleteQuiz.php?quizid=" + quizid);
+    });
+    $('input[id^="check-"]').each(function (index, button) {
+        let buttonId = $(button).attr("id");
+        let quizid = buttonId.substring(6, buttonId.length);
+        let checkBox = document.getElementById("check-"+quizid);
+        let puntuable = 0;
+        $(button).on('click', function () {
+                if (checkBox.checked == true){
+                    puntuable=1;
+                }else{
+                    puntuable=0;
+                }
+
+            $.ajax({
+                url: "updateQuizPuntuable.php",
+                type: "get",
+                data: {
+                    quizid,
+                    puntuable
+                },
+                success: function (response) {
+                },
+                error: function (xhr) {
+                    alert("Errore bat gertatu da.");
+                }
+            });
+        });
     });
 
 </script>

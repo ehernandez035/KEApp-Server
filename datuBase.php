@@ -8,14 +8,14 @@ if ($mysqli->connect_error) {
 function getQuizzes()
 {
     global $mysqli;
-    if ($stmt = $mysqli->prepare("SELECT quizid, description, description_esp FROM quizzes ORDER BY position ASC")) {
+    if ($stmt = $mysqli->prepare("SELECT quizid, description, description_esp, puntuable FROM quizzes ORDER BY position ASC")) {
 
         if ($stmt->execute()) {
-            $stmt->bind_result($id, $description, $description_es);
+            $stmt->bind_result($id, $description, $description_es, $punctuable);
             $stmt->store_result();
             $quizzes = array();
             while ($stmt->fetch()) {
-                $quizzes[] = array("id" => $id, "description" => $description, "description_es" => $description_es);
+                $quizzes[] = array("id" => $id, "description" => $description, "description_es" => $description_es, "punctuable" => $punctuable);
             }
             return $quizzes;
         }
@@ -26,14 +26,14 @@ function getQuizzes()
 function getQuestions($qid)
 {
     global $mysqli;
-    if ($stmt = $mysqli->prepare("SELECT questionid, correct_answer, correct_answer_esp, false_answer1, false_answer1_esp, false_answer2, false_answer2_esp, false_answer3, false_answer3_esp, question, question_esp FROM questions WHERE quizid=? ORDER BY position ASC")) {
+    if ($stmt = $mysqli->prepare("SELECT questionid, correct_answer, correct_answer_esp, false_answer1, false_answer1_esp, false_answer2, false_answer2_esp, false_answer3, false_answer3_esp, question, question_esp, note, noteEs FROM questions WHERE quizid=? ORDER BY position ASC")) {
         $stmt->bind_param("i", $qid);
         if ($stmt->execute()) {
             $stmt->store_result();
-            $stmt->bind_result($questionid, $correct_ans, $correct_ans_esp, $false1, $false1_esp, $false2, $false2_esp, $false3, $false3_esp, $question, $question_esp);
+            $stmt->bind_result($questionid, $correct_ans, $correct_ans_esp, $false1, $false1_esp, $false2, $false2_esp, $false3, $false3_esp, $question, $question_esp, $note, $noteEs);
             $questions = array();
             while ($stmt->fetch()) {
-                $questions[] = array("questionid" => $questionid, "correct_ans" => $correct_ans, "correct_ans_esp" => $correct_ans_esp, "false1" => $false1, "false1_esp" => $false1_esp, "false2" => $false2, "false2_esp" => $false2_esp, "false3" => $false3, "false3_esp" => $false3_esp, "question" => $question, "question_esp" => $question_esp);
+                $questions[] = array("questionid" => $questionid, "correct_ans" => $correct_ans, "correct_ans_esp" => $correct_ans_esp, "false1" => $false1, "false1_esp" => $false1_esp, "false2" => $false2, "false2_esp" => $false2_esp, "false3" => $false3, "false3_esp" => $false3_esp, "question" => $question, "question_esp" => $question_esp, "note" => $note, "noteEs" => $noteEs);
             }
             return $questions;
         }
@@ -229,4 +229,57 @@ function questionsPerQuiz($quizid)
         }
     }
 
+}
+function getGroupPoints($quizid, $usergroup)
+{
+    global $mysqli;
+    if ($stmt = $mysqli->prepare("SELECT SUM(correctnumber) FROM answers WHERE quizid=? AND userid IN (SELECT userid FROM users WHERE usergroup=?)")) {
+        $stmt->bind_param("is", $quizid, $usergroup);
+        if ($stmt->execute()) {
+            $stmt->store_result();
+            $stmt->bind_result($total);
+            $stmt->fetch();
+            return $total;
+        } else {
+            http_response_code(500);
+            echo $mysqli->error;
+            return null;
+        }
+    }
+}
+
+function answersPerQuizGroup($quizid, $usergroup)
+{
+    global $mysqli;
+    if ($stmt = $mysqli->prepare("SELECT COUNT(userid) FROM answers WHERE quizid=? AND userid IN (SELECT userid FROM users WHERE usergroup=?)")) {
+        $stmt->bind_param("is", $quizid, $usergroup);
+        if ($stmt->execute()) {
+            $stmt->store_result();
+            $stmt->bind_result($total);
+            $stmt->fetch();
+            return $total;
+        } else {
+            http_response_code(500);
+            echo $mysqli->error;
+            return null;
+        }
+    }
+
+}
+
+function isQuizPunctuable($quizid){
+    global $mysqli;
+    if ($stmt = $mysqli->prepare("SELECT puntuable FROM quizzes WHERE quizid=?")) {
+        $stmt->bind_param("i", $quizid);
+        if ($stmt->execute()) {
+            $stmt->store_result();
+            $stmt->bind_result($puntuable);
+            $stmt->fetch();
+            return $puntuable;
+        } else {
+            http_response_code(500);
+            echo $mysqli->error;
+            return null;
+        }
+    }
 }

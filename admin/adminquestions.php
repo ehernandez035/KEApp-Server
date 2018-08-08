@@ -22,7 +22,8 @@ $questions = getQuestions($quizid);
 </head>
 <body style="margin-bottom: 100px">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="menu.php"><img src="logo.png" style="width: 30px; height: 30px;" class="d-inline-block align-top mr-2">KEApp</a>
+    <a class="navbar-brand" href="menu.php"><img src="logo.png" style="width: 30px; height: 30px;"
+                                                 class="d-inline-block align-top mr-2">KEApp</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -75,23 +76,23 @@ $questions = getQuestions($quizid);
                         Galdera <?php echo $question['questionid'] ?>
                         <div>
                             <?php
-                            if($question['questionid']==firstQuestion($quizid)){
+                            if ($question['questionid'] == firstQuestion($quizid)) {
                                 echo "<button class='btn btn-secondary btn-sm' id='up-$question[questionid]' disabled>";
-                            }else{
+                            } else {
                                 echo "<button class='btn btn-secondary btn-sm' id='up-$question[questionid]'>";
                             }
                             ?>
-                                <i class='material-icons'>arrow_upward</i>
+                            <i class='material-icons'>arrow_upward</i>
                             </button>
 
                             <?php
-                            if($question['questionid']==lastQuestion($quizid)){
+                            if ($question['questionid'] == lastQuestion($quizid)) {
                                 echo "<button class='btn btn-secondary btn-sm' id='down-$question[questionid]' disabled>";
-                            }else{
+                            } else {
                                 echo "<button class='btn btn-secondary btn-sm' id='down-$question[questionid]'>";
                             }
                             ?>
-                                <i class='material-icons'>arrow_downward</i>
+                            <i class='material-icons'>arrow_downward</i>
                             </button>
 
                             <button class="btn btn-primary btn-sm" id="minimize-<?php echo $question['questionid'] ?>">
@@ -191,7 +192,32 @@ $questions = getQuestions($quizid);
                                         </div>
 
                                     </div>
-
+                                    <?php
+                                    if (!isQuizPunctuable($quizid)) {
+                                        ?>
+                                        <div class="row col-12 mb-3">
+                                            <div class="input-group" style="margin: auto">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Oharra:</span>
+                                                </div>
+                                                <textarea class="form-control" aria-label="With textarea"
+                                                          name="note"
+                                                          id='note-<?php echo $question['questionid']; ?>'><?php echo $question['note']; ?></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="row col-12 mb-3">
+                                            <div class="input-group" style="margin: auto">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Nota:</span>
+                                                </div>
+                                                <textarea class="form-control" aria-label="With textarea"
+                                                          name="noteEs"
+                                                          id='noteEs-<?php echo $question['questionid']; ?>'><?php echo $question['noteEs']; ?></textarea>
+                                            </div>
+                                        </div>
+                                        <?php
+                                    }
+                                    ?>
 
                                 </div>
                                 <div class="row">
@@ -268,7 +294,7 @@ $questions = getQuestions($quizid);
 
 <footer class="page-footer font-small bg-primary text-light fixed-bottom">
     <div style="display: flex; vertical-align: middle; justify-content: center">
-        <i class="material-icons" >email</i>:<a class="ml-2" href="mailto:keaaplikazioa@gmail.com" style="color: white">keaaplikazioa@gmail.com</a>
+        <i class="material-icons">email</i>:<a class="ml-2" href="mailto:keaaplikazioa@gmail.com" style="color: white">keaaplikazioa@gmail.com</a>
     </div>
     <!-- Copyright -->
     <div class="footer-copyright text-center py-3">© 2018 Copyright:
@@ -406,7 +432,31 @@ $questions = getQuestions($quizid);
                                    value=''>
                         </div>
                     </div>
-                </div>
+                    <?php
+            if (!isQuizPunctuable($quizid)){
+            ?>
+                    <div class="row col-12 mb-3">
+                                        <div class="input-group" style="margin: auto">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Oharra:</span>
+                                            </div>
+                                            <textarea class="form-control" aria-label="With textarea"
+                                                      id='note-${questionid} name='note' value=''></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row col-12 mb-3">
+                                        <div class="input-group" style="margin: auto">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Nota:</span>
+                                            </div>
+                                            <textarea class="form-control" aria-label="With textarea"
+                                                      id='noteEs-${questionid}' name='noteEs' value=''></textarea>
+                                        </div>
+                                    </div>
+                    </div>
+                    <?php
+            }
+            ?>
                  <div class="row">
                                 <div class="col-6">
                                     <input type="button" id='save-${questionid}'
@@ -431,7 +481,8 @@ $questions = getQuestions($quizid);
         downQuestion($("#down-" + questionid));
 
     }
-    function updateArrows( ) {
+
+    function updateArrows() {
         $('div[id^="card-"]').find("button[id^='up-']").removeAttr("disabled");
         $('div[id^="card-"]').find("button[id^='down-']").removeAttr("disabled");
 
