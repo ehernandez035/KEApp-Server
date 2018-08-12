@@ -23,7 +23,7 @@ $quizzes = getQuizzes();
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="display: flex; justify-content: space-between">
-    <a class="navbar-brand" href="menu.php"><img src="logo.png" style="width: 30px; height: 30px;" class="d-inline-block align-top mr-2">KEApp</a>
+    <a class="navbar-brand" href="menuEs.php"><img src="logo.png" style="width: 30px; height: 30px;" class="d-inline-block align-top mr-2">KEApp</a>
     <div>
 
         <select class="custom-select custom-select-sm ml-3" style="width: 18em" id="language" onchange="location = this.value;">
@@ -40,43 +40,43 @@ $quizzes = getQuizzes();
 
 <div class="container mt-3">
 
-    <h1>KEApp kudeaketa</h1>
+    <h1>KEApp administración</h1>
 
 
     <div class="card text-center mb-3" style="margin: auto; width: 75%">
-        <h5 class="card-header">Galdetegiak</h5>
+        <h5 class="card-header">Cuestionarios</h5>
         <div class="card-body">
             <i class="material-icons" style="font-size: 5em">
                 assignment
             </i>
-        <p class="card-text">Galdetegiak eta hauetan dauden galderen edukia antolatzeko gunea.</p>
-        <a class='btn btn-primary' href="admin.php">Galdetegiak</a>
+            <p class="card-text">Espacio para administrar los cuestionarios y sus preguntas.</p>
+            <a class='btn btn-primary' href="adminEs.php">Cuestionarios</a>
         </div>
     </div>
     <div class="card text-center mb-3" style="margin: auto; width: 75%">
-        <h5 class="card-header">Erabiltzaileak</h5>
+        <h5 class="card-header">Usuarios</h5>
         <div class="card-body">
             <i class="material-icons" style="font-size: 5em">
                 account_circle
             </i>
-        <p class="card-text">Erabiltzaileen kontuak antolatzeko gunea.</p>
-        <a class='btn btn-primary' href="users.php">Erabiltzaileak</a>
+            <p class="card-text">Espacio para administrar a los usuarios.</p>
+            <a class='btn btn-primary' href="usersEs.php">Usuarios</a>
         </div>
     </div>
     <div class="card text-center mb-3" style="margin: auto; width: 75%">
-        <h5 class="card-header">Emaitzak</h5>
+        <h5 class="card-header">Resultados</h5>
         <div class="card-body">
             <i class="material-icons" style="font-size: 5em">
                 assessment
             </i>
-            <p class="card-text">Galdetegi bakoitzaren asmatze-tasa.</p>
-            <a class='btn btn-primary' href="stats.php">Emaitzak</a>
+            <p class="card-text">Porcentaje de acierto por cada cuestionario.</p>
+            <a class='btn btn-primary' href="statsEs.php">Resultados</a>
         </div>
     </div>
 
 </div>
 
-<?php printFooter()?>
+<?php printFooterEs()?>
 <script language="JavaScript" src="js/jquery-3.3.1.min.js"></script>
 <script language="JavaScript" src="js/bootstrap.js"></script>
 

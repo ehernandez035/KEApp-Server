@@ -25,11 +25,11 @@ $class=$_GET["usergroup"];
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="menu.php"><img src="logo.png" style="width: 30px; height: 30px;"
+    <a class="navbar-brand" href="menuEs.php"><img src="logo.png" style="width: 30px; height: 30px;"
                                                  class="d-inline-block align-top mr-2">KEApp</a>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link" href="stats.php">Emaitzak</a>
+            <a class="nav-item nav-link" href="statsEs.php">Resultados</a>
         </div>
     </div>
     <div>
@@ -48,17 +48,17 @@ $class=$_GET["usergroup"];
 
 <div class="container mt-3">
 
-    <h1>KEApp kudeaketa</h1>
+    <h1>KEApp administración</h1>
 
     <div class="container text-center mt-3 mb-3">
         <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Emaitzak taldeka
+            <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Resultados por grupos
                 <span class="caret"></span></button>
             <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="stats.php?usergroup=g">Gaztelerako emaitzak</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="stats.php?usergroup=e">Euskarako emaitzak</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="statsEs.php?usergroup=g">Resultados castellano</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="statsEs.php?usergroup=e">Resultados euskara</a></li>
                 <li role="presentation" class="divider"></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="stats.php">Guztiak</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="statsEs.php">Todos</a></li>
             </ul>
         </div>
     </div>
@@ -81,7 +81,7 @@ $class=$_GET["usergroup"];
         $result = dechex($redC | $greenC | $blueC);
         $color = str_pad($result, 6, "0", STR_PAD_LEFT);
         echo "<div class=\"card text-center mb-3\" style=\"margin: auto; width: 75%\" >";
-        echo "<h5 class=\"card-header\" style=' background-color: #$color'>$quiz[id] galdetegia</h5>";
+        echo "<h5 class=\"card-header\" style=' background-color: #$color'>$quiz[id] cuestionario</h5>";
         echo "<div class='card-body'>";
         echo "% " . number_format($percentage,2);
         echo "</div>";
@@ -91,7 +91,7 @@ $class=$_GET["usergroup"];
     ?>
 </div>
 
-<?php printFooter()?>
+<?php printFooterEs()?>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>

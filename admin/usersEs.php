@@ -28,14 +28,14 @@ if($class=="g"){
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="menu.php"> <img src="logo.png" style="width: 30px; height: 30px;" class="d-inline-block align-top mr-2">KEApp</a>
+    <a class="navbar-brand" href="menuEs.php"> <img src="logo.png" style="width: 30px; height: 30px;" class="d-inline-block align-top mr-2">KEApp</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link" href="users.php">Erabiltzaileak</a>
+            <a class="nav-item nav-link" href="usersEs.php">Usuarios</a>
         </div>
     </div>
     <div>
@@ -54,27 +54,27 @@ if($class=="g"){
 
 <div class="container text-center mt-3">
     <div class="dropdown">
-        <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Erabiltzaile mota
+        <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Tipo de usuario
             <span class="caret"></span></button>
         <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="users.php?usergroup=g">Gaztelerako taldea</a></li>
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="users.php?usergroup=e">Euskarako taldea</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="usersEs.php?usergroup=g">Grupo de castellano</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="usersEs.php?usergroup=e">Grupo de euskara</a></li>
             <li role="presentation" class="divider"></li>
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="users.php">Guztiak</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="usersEs.php">Todos</a></li>
         </ul>
     </div>
 </div>
 
 <div class="container mt-3">
 
-    <h1>KEApp kudeaketa</h1>
+    <h1>KEApp administración</h1>
     <table class="table mt-3">
         <tr>
-            <th>Erabiltzailea</th>
-            <th>Email helbidea</th>
+            <th>Usuario</th>
+            <th>Dirección de correo</th>
             <th></th>
             <th></th>
-            <th>Erabiltzaileen taldea</th>
+            <th>Grupo del usuario</th>
         </tr>
         <?php
         foreach ($users as $user) {
@@ -82,31 +82,31 @@ if($class=="g"){
             echo "<td>$user[username]</td>";
             echo "<td>$user[email]</td>";
             echo "<td><button class='btn btn-danger' type='button' data-target='#deleteUserModal' data-toggle='modal'
-                                            data-userid='$user[userid]'>Ezabatu</button></td>";
+                                            data-userid='$user[userid]'>Eliminar</button></td>";
             echo "<td><button class='btn btn-primary' type='button' data-email='$user[email]' data-target='#messageModal' data-toggle='modal'>
 <i class='material-icons'>
 mail
 </i>
 </button></td> ";
             ?> <td><div class="btn-group btn-group-toggle" data-toggle="buttons" id='divBut-<?php echo $user['userid'] ?>'>
-  <label class="btn btn-secondary <?php if($user['usergroup']==="b") echo "active";?>" id='b-<?php echo $user['userid'] ?>'>
-    <input type="radio" name="besteak" autocomplete="off" <?php if($user['usergroup']=="b") echo "checked";?>> B
-  </label>
-  <label class="btn btn-secondary <?php if($user['usergroup']==="g") echo "active";?>" id='g-<?php echo $user['userid'] ?>'>
-    <input type="radio" name="gaztelera"   autocomplete="off" <?php if($user['usergroup']=="g") echo "checked";?>> G
-  </label>
-  <label class="btn btn-secondary <?php if($user['usergroup']==="e") echo "active";?>" id='e-<?php echo $user['userid'] ?>'>
-    <input type="radio" name="euskara" autocomplete="off" <?php if($user['usergroup']=="e") echo "checked";?>> E
-  </label>
-</div></td>
-<?php
+                    <label class="btn btn-secondary <?php if($user['usergroup']==="b") echo "active";?>" id='b-<?php echo $user['userid'] ?>'>
+                        <input type="radio" name="besteak" autocomplete="off" <?php if($user['usergroup']=="b") echo "checked";?>> B
+                    </label>
+                    <label class="btn btn-secondary <?php if($user['usergroup']==="g") echo "active";?>" id='g-<?php echo $user['userid'] ?>'>
+                        <input type="radio" name="gaztelera"   autocomplete="off" <?php if($user['usergroup']=="g") echo "checked";?>> G
+                    </label>
+                    <label class="btn btn-secondary <?php if($user['usergroup']==="e") echo "active";?>" id='e-<?php echo $user['userid'] ?>'>
+                        <input type="radio" name="euskara" autocomplete="off" <?php if($user['usergroup']=="e") echo "checked";?>> E
+                    </label>
+                </div></td>
+            <?php
             echo "</tr>";
 
         } ?>
     </table>
 </div>
 
-<?php printFooter()?>
+<?php printFooterEs()?>
 
 
 <!-- Modal -->
@@ -115,16 +115,16 @@ mail
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Erabiltzailea ezabatu</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Eliminar usuario</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">Ziur al zaude erabiltzailea ezabatu nahi duzula?
+            <div class="modal-body">¿Está seguro de que desea eliminar al usuario?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Itxi</button>
-                <a id="delete-user-confirm" class="btn btn-danger text-light">Ezabatu</a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <a id="delete-user-confirm" class="btn btn-danger text-light">Eliminar</a>
             </div>
         </div>
     </div>
@@ -135,7 +135,7 @@ mail
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Mezua bidali</h5>
+                <h5 class="modal-title">Mandar mensaje</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -143,15 +143,15 @@ mail
             <div class="modal-body">
                 <form method="post" action="sendMessage.php" id="messageForm">
                     <div class="form-group">
-                        <label for="message-text" class="col-form-label">Mezua:</label>
+                        <label for="message-text" class="col-form-label">Mensaje::</label>
                         <textarea class="form-control" id="message-text" name="message"></textarea>
                         <input name="email" type="hidden" id="emailInput">
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" id="sendButtonConfirm" class="btn btn-primary">Bidali</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Itxi</button>
+                <button type="button" id="sendButtonConfirm" class="btn btn-primary">Enviar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
@@ -198,7 +198,7 @@ mail
                 success: function (response) {
                 },
                 error: function (xhr) {
-                    alert("Errore bat gertatu da.");
+                    alert("Ha ocurrido algún error.");
                 }
             });
         });
@@ -213,7 +213,7 @@ mail
                 success: function (response) {
                 },
                 error: function (xhr) {
-                    alert("Errore bat gertatu da.");
+                    alert("Ha ocurrido algún error.");
                 }
             });
         });
@@ -228,7 +228,7 @@ mail
                 success: function (response) {
                 },
                 error: function (xhr) {
-                    alert("Errore bat gertatu da.");
+                    alert("Ha ocurrido algún error.");
                 }
             });
         })
@@ -236,4 +236,3 @@ mail
 
 </script>
 </body>
-</html>

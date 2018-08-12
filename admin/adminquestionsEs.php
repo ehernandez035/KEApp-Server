@@ -25,7 +25,7 @@ $questions = getQuestions($quizid);
 <!-- Navbar -->
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="menu.php"><img src="logo.png" style="width: 30px; height: 30px;"
+    <a class="navbar-brand" href="menuEs.php"><img src="logo.png" style="width: 30px; height: 30px;"
                                                  class="d-inline-block align-top mr-2">KEApp</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,10 +33,11 @@ $questions = getQuestions($quizid);
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link" href="admin.php">Galdetegiak</a>
+            <a class="nav-item nav-link" href="adminEs.php">Cuestionarios</a>
         </div>
     </div>
     <div>
+
         <a href=https://drive.google.com/open?id=109FE96oEbE8nYcc8Tl9lYN2k3TWKofbX class="d-inline-block align-top mr-2"><i class="material-icons">
                 help_outline
             </i></a>
@@ -46,10 +47,10 @@ $questions = getQuestions($quizid);
 <main>
 
     <div class="container mt-3">
-        <h1>KEApp kudeaketa</h1>
+        <h1>KEApp administración</h1>
         <div class="card mt-3">
             <div class="card-header">
-                <h2>Galdetegia</h2>
+                <h2>Cuestionario</h2>
             </div>
             <div class="card-body">
                 <form id="galdetegi_form">
@@ -69,7 +70,7 @@ $questions = getQuestions($quizid);
                                value='<?php echo $quizzes[$quizid - 1]['description_es'] ?>'>
                     </div>
                     <div class="text-center">
-                        <input id="gordeQuizButton" class="btn btn-primary" type="button" value="Gorde!">
+                        <input id="gordeQuizButton" class="btn btn-primary" type="button" value="Guardar!">
                     </div>
                 </form>
             </div>
@@ -82,7 +83,7 @@ $questions = getQuestions($quizid);
                 ?>
                 <div class="card mt-3" id="card-<?php echo $question['questionid'] ?>">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                        Galdera <?php echo $question['questionid'] ?>
+                        Pregunta <?php echo $question['questionid'] ?>
                         <div>
                             <?php
                             if ($question['questionid'] == firstQuestion($quizid)) {
@@ -123,8 +124,8 @@ $questions = getQuestions($quizid);
                                                        onchange="onFileSelected(event,<?php echo $question['questionid']; ?>)"
                                                        id="file-<?php echo $question['questionid']; ?>">
                                                 <label class="custom-file-label"
-                                                       for="file-<?php echo $question['questionid']; ?>">Argazkia
-                                                    aukeratu</label>
+                                                       for="file-<?php echo $question['questionid']; ?>">Elige una imagen
+                                                </label>
                                             </div>
                                             <img id="image-upload-<?php echo $question['questionid']; ?>"
                                                  style="max-width: 100%; display: block; margin: auto">
@@ -232,12 +233,12 @@ $questions = getQuestions($quizid);
                                 <div class="row">
                                     <div class="col-6">
                                         <input type="button" id='save-<?php echo $question['questionid']; ?>'
-                                               class='btn btn-primary' value="Gorde!">
+                                               class='btn btn-primary' value="Guardar!">
                                     </div>
                                     <div class="col-6">
                                         <button type="button" class='btn btn-danger' data-toggle="modal"
                                                 data-target="#deleteQuestionModal"
-                                                data-questionid="<?php echo $question['questionid']; ?>">Ezabatu
+                                                data-questionid="<?php echo $question['questionid']; ?>">Eliminar
                                         </button>
                                     </div>
                                 </div>
@@ -253,7 +254,7 @@ $questions = getQuestions($quizid);
     </div>
     <div class="container">
         <div class="text-center mt-3">
-            <button type="button" id="addQuestionButton" class='btn btn-primary'>Galdera berria gehitu</button>
+            <button type="button" id="addQuestionButton" class='btn btn-primary'>Añadir una nueva pregunta</button>
         </div>
     </div>
 
@@ -263,16 +264,16 @@ $questions = getQuestions($quizid);
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Galdera ezabatu</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Eliminar la pregunta</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">Ziur al zaude galdera ezabatu nahi duzula?
+                <div class="modal-body">¿Está seguro de que deasea borra la pregunta?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Itxi</button>
-                    <button type="button" id="delete-question-confirm" class="btn btn-danger">Ezabatu</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" id="delete-question-confirm" class="btn btn-danger">Eliminar</button>
                 </div>
             </div>
         </div>
@@ -284,16 +285,16 @@ $questions = getQuestions($quizid);
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Galdera gorde da</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Se ha guardado la pregunta</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Aldaketak gorde dira.
+                    Se han guardado los cambios.
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Itxi</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
@@ -326,7 +327,7 @@ $questions = getQuestions($quizid);
                     updateArrows();
                 },
                 error: function (xhr) {
-                    alert("Errore bat gertatu da.");
+                    alert("Ha ocurrido algún error.");
                     $('#deleteQuestionModal').modal('hide');
                 }
             });
@@ -337,7 +338,7 @@ $questions = getQuestions($quizid);
         var questionContent = `
 <div class="card mt-3" id="card-${questionid}">
     <div class="card-header d-flex align-items-center justify-content-between">
-        Galdera ${questionid}
+        Pregunta ${questionid}
         <div>
             <button class='btn btn-secondary btn-sm' id='up-${questionid}'>
                 <i class='material-icons'>arrow_upward</i>
@@ -363,8 +364,7 @@ $questions = getQuestions($quizid);
                                 <input type="file" class="custom-file-input" name="img"
                                        id="file-${questionid}" onchange="onFileSelected(event,${questionid})">
                                 <label class="custom-file-label"
-                                       for="file-${questionid}">Argazkia
-                                    aukeratu</label>
+                                       for="file-${questionid}">Elige una imagen</label>
                             </div>
                             <img id="image-upload-${questionid}" style="max-width: 100%; display: block; margin: auto">
                         </div>
@@ -459,12 +459,12 @@ $questions = getQuestions($quizid);
                  <div class="row">
                                 <div class="col-6">
                                     <input type="button" id='save-${questionid}'
-                                           class='btn btn-primary' value="Gorde!">
+                                           class='btn btn-primary' value="Guardar!">
                                 </div>
                                 <div class="col-6">
                                     <button type="button" class='btn btn-danger' data-toggle="modal"
                                             data-target="#deleteQuestionModal"
-                                            data-questionid="${questionid}">Ezabatu
+                                            data-questionid="${questionid}">Eliminar
                                     </button>
                                 </div>
                             </div>
@@ -501,7 +501,7 @@ $questions = getQuestions($quizid);
                 createQuestion(response);
             },
             error: function (xhr) {
-                alert("Errore bat gertatu da.");
+                alert("Ha ocurrido algún error.");
             }
         });
     });
@@ -521,11 +521,11 @@ $questions = getQuestions($quizid);
                 let btn = $('#gordeQuizButton');
                 btn.val("Gordeta").removeClass('btn-primary').addClass('btn-success');
                 setTimeout(function () {
-                    btn.val("Gorde!").removeClass('btn-success').addClass('btn-primary');
+                    btn.val("Guardar!").removeClass('btn-success').addClass('btn-primary');
                 }, 2000);
             },
             error: function (xhr) {
-                alert("Errore bat gertatu da.");
+                alert("Ha ocurrido algún error.");
             }
         });
     });
@@ -615,7 +615,7 @@ $questions = getQuestions($quizid);
                         $el.prev().before($el);
                 },
                 error: function (xhr) {
-                    alert("Errore bat gertatu da.");
+                    alert("Ha ocurrido algún error.");
                 }
             });
         });
@@ -657,3 +657,4 @@ $questions = getQuestions($quizid);
 
 </body>
 
+</html>

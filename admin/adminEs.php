@@ -32,7 +32,7 @@ $lastQuiz = lastQuiz();
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link" href="#">Galdetegiak</a>
+            <a class="nav-item nav-link" href="#">Cuestionarios</a>
         </div>
     </div>
     <div>
@@ -51,13 +51,13 @@ $lastQuiz = lastQuiz();
 
 <div class="container mt-3">
 
-    <h1>KEApp kudeaketa</h1>
+    <h1>KEApp administración</h1>
     <table class="table mt-3">
         <tr>
             <th>ID</th>
             <th>Deskribapena</th>
             <th>Descripción</th>
-            <th>Puntuaziorako da?</th>
+            <th>¿Sirve para puntuar?</th>
             <th></th>
             <th></th>
             <th></th>
@@ -75,9 +75,9 @@ $lastQuiz = lastQuiz();
                 (isQuizPunctuable($quiz['id'])==1? "checked" : "") . ">
               <label class=\"custom-control-label\" for=\"check-$quiz[id]\"></label>
             </div></td>";
-            echo "<td><a class='btn btn-primary' href='adminquestions.php?quizid=$quiz[id]'>Ireki</a></td>";
+            echo "<td><a class='btn btn-primary' href='adminquestionsEs.php?quizid=$quiz[id]'>Mostrar</a></td>";
             echo "<td><button class='btn btn-danger' type='button' data-target='#deleteQuestionModal' data-toggle='modal'
-                                            data-quizid='$quiz[id]'>Ezabatu</button></td>";
+                                            data-quizid='$quiz[id]'>Eliminar</button></td>";
             if ($quiz["id"] != $firstQuiz) {
                 echo "<td><a class='btn btn-primary' id='up-$quiz[id]' href='orderQuizzesUP.php?quizid=$quiz[id]'><i class='material-icons'>arrow_upward</i></a></td>";
             } else {
@@ -96,11 +96,11 @@ $lastQuiz = lastQuiz();
 </div>
 <div class="container">
     <div class="text-center mt-3">
-        <a href="addQuiz.php" class='btn btn-primary'>Galdetegi berria gehitu</a>
+        <a href="addQuiz.php" class='btn btn-primary'>Añadir nuevo cuestionario</a>
     </div>
 </div>
 
-<?php printFooter()?>
+<?php printFooterEs()?>
 
 <!-- Modal -->
 <div class="modal fade" id="deleteQuestionModal" tabindex="-1" role="dialog" aria-labelledby="Delete question"
@@ -108,16 +108,16 @@ $lastQuiz = lastQuiz();
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Galdetegia ezabatu</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Borrar questionario</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">Ziur al zaude galdetegia ezabatu nahi duzula?
+            <div class="modal-body">¿Está seguro de que desea borrar el cuestionario?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Itxi</button>
-                <a id="delete-quiz-confirm" class="btn btn-danger text-light">Ezabatu</a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <a id="delete-quiz-confirm" class="btn btn-danger text-light">Eliminar</a>
             </div>
         </div>
     </div>
@@ -142,11 +142,11 @@ $lastQuiz = lastQuiz();
         let checkBox = document.getElementById("check-"+quizid);
         let puntuable = 0;
         $(button).on('click', function () {
-                if (checkBox.checked == true){
-                    puntuable=1;
-                }else{
-                    puntuable=0;
-                }
+            if (checkBox.checked == true){
+                puntuable=1;
+            }else{
+                puntuable=0;
+            }
 
             $.ajax({
                 url: "updateQuizPuntuable.php",
@@ -158,7 +158,7 @@ $lastQuiz = lastQuiz();
                 success: function (response) {
                 },
                 error: function (xhr) {
-                    alert("Errore bat gertatu da.");
+                    alert("Ha ocurrido algún error.");
                 }
             });
         });
